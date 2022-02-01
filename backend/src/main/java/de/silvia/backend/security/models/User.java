@@ -15,9 +15,10 @@ import java.util.List;
 @Document("User")
 public class User implements UserDetails {
 
-    public static User newUser(String username, String password, List<GrantedAuthority> authorities) {
+    public static User newUser(String firstname, String email, String lastname, String username, String password,
+                               List<GrantedAuthority> authorities) {
         return User.builder()
-                .username(username).password(password)
+                .username(username).password(password).firstname(firstname).lastname(lastname).email(email)
                 .authorities(authorities)
                 .enabled(true)
                 .accountNonExpired(true)
@@ -25,9 +26,11 @@ public class User implements UserDetails {
                 .credentialsNonExpired(true)
                 .build();
     }
-
     @Id
     String username;
+    String firstname;
+    String lastname;
+    String email;
     String password;
     @Transient
     List<GrantedAuthority> authorities;

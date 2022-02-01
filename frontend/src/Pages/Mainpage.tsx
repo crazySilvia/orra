@@ -6,7 +6,7 @@ export default function Mainpage(){
     return(
         <div>
             <NavBar />
-            <Header title="Zettel"/>
+            <Header title="OrrA"/>
         </div>
     )
 }

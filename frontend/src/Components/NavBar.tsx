@@ -11,6 +11,9 @@ export default function NavBar() {
             <Link to={"/login"}>
                 <input type="button" value={"Login"} />
             </Link>
+            <Link to={"/register"}>
+                <input type="button" value={"Registrieren"} />
+            </Link>
         </div>
     )
 }
