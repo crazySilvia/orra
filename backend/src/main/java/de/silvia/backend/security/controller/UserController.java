@@ -6,6 +6,7 @@ import de.silvia.backend.security.services.RegisterService;
 import de.silvia.backend.security.services.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
 import java.security.Principal;
 
 @CrossOrigin
@@ -15,7 +16,7 @@ public class UserController {
     private final UserService uServ;
     private final RegisterService rServ;
 
-    public UserController(UserService uServ, RegisterService rServ){
+    public UserController(UserService uServ, RegisterService rServ) {
         this.uServ = uServ;
         this.rServ = rServ;
     }
@@ -23,7 +24,8 @@ public class UserController {
     //*********** Methoden *********
 
     @PostMapping("register")
-    public void register(@RequestBody UserDto userDto){
+    public void register(@RequestBody UserDto userDto) {
+
         rServ.registerUser(userDto);
     }
 

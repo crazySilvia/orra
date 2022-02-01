@@ -38,18 +38,14 @@ export default function RegisterPage(){
         setEmail(event.target.value)
     }
 
-
-    //ToDo Daten in ein UserDto packen und ans Backend schicken
-
     const  newUserDto = {firstName, lastName, userName, password, email} as NewUserDto;
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        register({newUserDto}).then((data: string) => {
-            setJwt(data)
+        register(newUserDto).then(() => {
             navigate('/')
         })
-            .catch(() => console.error("Error"))
+            .catch((er) => console.error(er))
     }
 
 

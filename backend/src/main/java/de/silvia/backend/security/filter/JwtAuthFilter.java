@@ -33,12 +33,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         final String token = getToken(request);
-        if(token != null)try{
+        if (token != null) try {
             final String username = jwtUtils.extractUserName(token);
-            if((username != null) && SecurityContextHolder.getContext().getAuthentication() == null){
+            if ((username != null) && SecurityContextHolder.getContext().getAuthentication() == null) {
                 //User aus Datenbank laden
                 final UserDetails userDetails = uServ.loadUserByUsername(username);
-                if(jwtUtils.validateToken(token, userDetails.getUsername())){
+                if (jwtUtils.validateToken(token, userDetails.getUsername())) {
                     //Spring informieren, dass die Anmeldung korrekt ist
                     final UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(userDetails, null,
@@ -47,7 +47,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             LOG.warn("Error while parsing token", e);
         }
         filterChain.doFilter(request, response);
@@ -55,9 +55,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private String getToken(HttpServletRequest request) {
         String autHeader = request.getHeader("Authorization");
-        if(autHeader == null){
+        if (autHeader == null) {
             return null;
-        }else {
+        } else {
             return autHeader.replace("Bearer", "").trim();
         }
     }
