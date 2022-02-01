@@ -14,6 +14,6 @@ export const login = (userInput: { password: string | undefined; name: string | 
  * @param userInput Login-Daten der User
  */
 
-export const register = (userInput: { newUserDto: NewUserDto }) =>
+export const register = (userInput: NewUserDto) =>
     axios.post("/api/user/register", userInput)
         .then((response: AxiosResponse<string>) => response.data)

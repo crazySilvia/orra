@@ -17,7 +17,7 @@ public class JWTUtils {
     //muss in eine server oder Installationsdatei ausgelagert werden
     final private String secret = "This is very bad";
 
-    public String createToken(Map<String, Object> claims, String subject){
+    public String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
@@ -27,6 +27,7 @@ public class JWTUtils {
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
+
     public String extractUserName(String token) {
         Claims claims = extractAllClaims(token);
         return claims.getSubject();

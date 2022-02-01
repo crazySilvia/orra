@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     final JwtAuthFilter jwtAuthFilter;
     final UserDetailsService userDetailsService;
 
-    public SecurityConfig (JwtAuthFilter jwtAuthFilter, UserDetailsService userDetailsService){
+    public SecurityConfig(JwtAuthFilter jwtAuthFilter, UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthFilter = jwtAuthFilter;
     }
@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests() //Alles freigegeben
                 //.antMatchers("/**").authenticated()
-                .antMatchers("/api/**").authenticated() //hier muss eingelogged werden
+                .antMatchers("/api/**").permitAll() //hier muss eingelogged werden
                 .antMatchers("/api/user/me").authenticated()
                 .antMatchers("/auth/login**").permitAll()
                 .antMatchers("/zettel/**").permitAll()
@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new Argon2PasswordEncoder();
     }
 

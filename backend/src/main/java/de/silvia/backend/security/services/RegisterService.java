@@ -17,22 +17,24 @@ import java.util.List;
 public class RegisterService {
 
     private static final Log LOG = LogFactory.getLog(BackendApplication.class);
-
+    final PasswordEncoder encoder;
     private final IUserRepo userRepo;
 
-    public RegisterService(IUserRepo userRepo) {
+    public RegisterService(IUserRepo userRepo, PasswordEncoder encoder) {
         this.userRepo = userRepo;
+        this.encoder = encoder;
     }
 
-    PasswordEncoder encoder;
-    public void registerUser(@Validated UserDto data){
+
+    public void registerUser(@Validated UserDto data) {
+        LOG.info(data);
         final String encodedPassword = encoder.encode(data.getPassword());
         final User user = User.newUser(data.getFirstName(), data.getEmail(), data.getLastName(), data.getUserName(),
                 encodedPassword, List.of(
-                new SimpleGrantedAuthority("API_READWRITE")));
+                        new SimpleGrantedAuthority("API_READWRITE")));
         try {
             userRepo.insert(user);
-        } catch (Exception e){
+        } catch (Exception e) {
             LOG.info("User " + user.getUsername() + " already exists.");
         }
     }
