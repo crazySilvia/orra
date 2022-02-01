@@ -17,7 +17,7 @@ import java.util.List;
 public class RegisterService {
 
     private static final Log LOG = LogFactory.getLog(BackendApplication.class);
-    final PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
     private final IUserRepo userRepo;
 
     public RegisterService(IUserRepo userRepo, PasswordEncoder encoder) {
