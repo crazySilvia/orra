@@ -43,7 +43,7 @@ export default function RegisterPage(){
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         register(newUserDto).then(() => {
-            navigate('/')
+            navigate('/login')
         })
             .catch((er) => console.error(er))
     }

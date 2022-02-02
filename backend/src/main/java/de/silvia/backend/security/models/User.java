@@ -32,6 +32,9 @@ public class User implements UserDetails {
     boolean accountNonLocked;
     boolean credentialsNonExpired;
 
+    public User(String username, String password) {
+    }
+
     public static User newUser(String firstname, String email, String lastname, String username, String password,
                                List<GrantedAuthority> authorities) {
         return User.builder()
