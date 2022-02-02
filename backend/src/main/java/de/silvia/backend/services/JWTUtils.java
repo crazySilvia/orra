@@ -3,6 +3,7 @@ package de.silvia.backend.services;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -16,6 +17,9 @@ public class JWTUtils {
     //Passwort um Schlüssel auszustellen, nur zum Testen hier
     //muss in eine server oder Installationsdatei ausgelagert werden
     final private String secret = "This is very bad";
+
+    /*@Value(value = "${SECRET_KEY}")
+    private String secret;*/
 
     public String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
