@@ -33,10 +33,8 @@ public class RegisterService {
                         new SimpleGrantedAuthority("API_READWRITE")));
         try {
             userRepo.insert(user);
-            //return true;
         } catch (Exception e) {
             LOG.info("User " + user.getUsername() + " already exists.");
-            //return false;
         }
         return true;
     }
