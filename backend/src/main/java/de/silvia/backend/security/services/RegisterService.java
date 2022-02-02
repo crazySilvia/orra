@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
+
 @Service
 public class RegisterService {
 
@@ -25,17 +26,18 @@ public class RegisterService {
         this.encoder = encoder;
     }
 
-
-    public void registerUser(@Validated UserDto data) {
-        LOG.info(data);
+    public Boolean registerUser(@Validated UserDto data) {
         final String encodedPassword = encoder.encode(data.getPassword());
         final User user = User.newUser(data.getFirstName(), data.getEmail(), data.getLastName(), data.getUserName(),
                 encodedPassword, List.of(
                         new SimpleGrantedAuthority("API_READWRITE")));
         try {
             userRepo.insert(user);
+            //return true;
         } catch (Exception e) {
             LOG.info("User " + user.getUsername() + " already exists.");
+            //return false;
         }
+        return true;
     }
 }

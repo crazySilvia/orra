@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -18,7 +20,9 @@ class UserServiceTest {
     @Test
     public void loadUserByUsername()  {
         assertNotNull(userRepo);
-        User mockedUser = new User("Julius", "123456");
+        User mockedUser = User.newUser("Julius", "jjj@ddd.cd", "Schmitz",
+                "userX", "kskskk", List.of(
+                        new SimpleGrantedAuthority("API_READWRITE")));
         when(userRepo.findByUsername("Julius")).thenReturn(java.util.Optional.of(mockedUser));
         UserService t  = new UserService(userRepo);
         User check = t.loadUserByUsername("Julius");
