@@ -14,9 +14,8 @@ import java.util.Map;
 @Service
 public class JWTUtils {
 
-    //Passwort um Schlüssel auszustellen, nur zum Testen hier
-    //muss in eine server oder Installationsdatei ausgelagert werden
-    final private String secret = "This is very bad";
+    @Value(value = "${secret}")
+    private String secret;
 
     /*@Value(value = "${SECRET_KEY}")
     private String secret;*/
