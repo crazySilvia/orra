@@ -14,12 +14,8 @@ import java.util.Map;
 @Service
 public class JWTUtils {
 
-    //Passwort um Schlüssel auszustellen, nur zum Testen hier
-    //muss in eine server oder Installationsdatei ausgelagert werden
-    final private String secret = "This is very bad";
-
-    /*@Value(value = "${SECRET_KEY}")
-    private String secret;*/
+    @Value(value = "${secret}")
+    private String secret;
 
     public String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
