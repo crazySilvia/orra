@@ -17,8 +17,6 @@ public class JWTUtils {
     @Value(value = "${secret}")
     private String secret;
 
-    /*@Value(value = "${SECRET_KEY}")
-    private String secret;*/
 
     public String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
