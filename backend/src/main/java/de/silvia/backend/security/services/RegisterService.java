@@ -26,7 +26,7 @@ public class RegisterService {
         this.encoder = encoder;
     }
 
-    public Boolean registerUser(@Validated UserDto data) {
+    public void registerUser(@Validated UserDto data) {
         final String encodedPassword = encoder.encode(data.getPassword());
         final User user = User.newUser(data.getFirstName(), data.getEmail(), data.getLastName(), data.getUserName(),
                 encodedPassword, List.of(
@@ -36,6 +36,5 @@ public class RegisterService {
         } catch (Exception e) {
             LOG.info("User " + user.getUsername() + " already exists.");
         }
-        return true;
     }
 }
