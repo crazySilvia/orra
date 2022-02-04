@@ -27,8 +27,7 @@ export default function LoginPage(){
         login({name, password})
             .then((data : string) => {
                 setJwt(data)
-                //ToDo Linkziel nach Login einfügen
-                navigate('/')
+                navigate('/vorrat')
             })
             .catch(() => console.error("Error"))
     }
