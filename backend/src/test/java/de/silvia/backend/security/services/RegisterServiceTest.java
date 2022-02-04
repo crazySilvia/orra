@@ -34,7 +34,7 @@ class RegisterServiceTest {
                         new SimpleGrantedAuthority("API_READWRITE")));
         when(userRepo.insert(mockedUser)).thenReturn(mockedUser);
         RegisterService r = new RegisterService(userRepo, encoder);
-        assertTrue(r.registerUser(mockedUserDto));
+        r.registerUser(mockedUserDto);
         verify(userRepo,times(1)).insert(mockedUser);
     }
 }

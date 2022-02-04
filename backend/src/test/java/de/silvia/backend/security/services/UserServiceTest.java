@@ -25,7 +25,7 @@ class UserServiceTest {
                         new SimpleGrantedAuthority("API_READWRITE")));
         when(userRepo.findByUsername("Julius")).thenReturn(java.util.Optional.of(mockedUser));
         UserService t  = new UserService(userRepo);
-        User check = t.loadUserByUsername("Julius");
-        assertEquals(mockedUser, check);
+        User actualUser = t.loadUserByUsername("Julius");
+        assertEquals(mockedUser, actualUser);
     }
 }
