@@ -26,7 +26,7 @@ function App() {
               <Route path={"/gewuerze"} element={<GewuerzePage />}/>
               <Route path={"/trocken"} element={<TrockenPage />}/>
               <Route path="/getraenke" element={<GetraenkePage />}/>
-              <Route path={"/Konserven"} element={<KonservenPage />}/>
+              <Route path={"/konserven"} element={<KonservenPage />}/>
               <Route path={"/selbstgemacht"} element={<SelbstgemachtesPage />}/>
               <Route path={"/sonstiges"} element={<SonstigesPage />}/>
               <Route path={"/backen"} element={<BackenPage />}/>
