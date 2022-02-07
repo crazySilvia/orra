@@ -1,6 +1,7 @@
 package de.silvia.backend.repositories;
 
 import de.silvia.backend.models.ArtikelList;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,5 @@ public interface IArtikelListRepo extends MongoRepository<ArtikelList, String> {
 
     void insert(Optional<ArtikelList> optionalArtikelList);
 
-    List<ArtikelList> findAllLists();
+    @NotNull List<ArtikelList> findAll();
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {createContext, ReactElement, useState} from "react";
+import {createContext, useState} from "react";
 import jwt_decode from 'jwt-decode'
 
 export interface AuthContextType {
@@ -12,7 +12,7 @@ export const AuthContext = createContext<AuthContextType>({
     setJwt: () => {}
 })
 
-export default function AuthProvider({children} : {children: ReactElement<any, any>}) {
+export default function AuthProvider({children} : {children: React.ReactNode}) {
 
     const [token, setToken] = useState<string>()
     const [jwtDecoded, setJwtDecoded] = useState({})

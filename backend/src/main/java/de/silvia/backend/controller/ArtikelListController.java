@@ -24,7 +24,7 @@ public class ArtikelListController {
     }
 
     @PostMapping("artikelList")
-    public ArtikelList addArtikelList(String listname) throws CloneNotSupportedException {
+    public ArtikelList addArtikelList(@RequestBody String listname) throws CloneNotSupportedException {
         return aServ.addArtikelList(listname);
     }
 

@@ -1,0 +1,19 @@
+/* Sidebar links */
+a {
+    display: block;
+    color: #bc3908;
+    padding: 10px;
+    text-decoration: none;
+}
+
+/* Active/current link */
+a.active {
+    background-color: #000000;
+    color: #f8c0c8;
+}
+
+/* Links on mouse-over */
+a:hover:not(.active) {
+    background-color: #f8c0c8;
+    color: #bc3908;
+}

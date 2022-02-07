@@ -1,3 +1,31 @@
-.navBar{
-    navbutton_background_color: #f71735;
+/* Add a black background color to the top navigation */
+.navbar {
+    background-color: #000000;
+    overflow: auto;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+/* Style the links inside the navigation bar */
+.navbar a {
+    float: left;
+    display: block;
+    color: #bc3908;
+    text-align: center;
+    padding: 14px 14px;
+    text-decoration: none;
+
+}
+
+/* Change the color of links on hover */
+.navbar a:hover:not(.active) {
+    background-color: #f8c0c8;
+    color: #bc3908;
+}
+
+/* Add an active class to highlight the current page */
+.navbar a.active {
+    background-color: #000000;
+    color: #f8c0c8;
 }

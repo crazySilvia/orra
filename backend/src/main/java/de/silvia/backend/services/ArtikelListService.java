@@ -31,7 +31,7 @@ public class ArtikelListService {
     }
 
     public List<ArtikelList> getAllArtikelLists() {
-        return artikelListRepo.findAllLists();
+        return artikelListRepo.findAll();
     }
 
     public ArtikelList addArtikel(ArtikelDto artikelDto, String listname) {

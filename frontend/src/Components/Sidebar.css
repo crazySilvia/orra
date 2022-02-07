@@ -1,0 +1,11 @@
+/* The side navigation menu */
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 125px;
+    background-color: #000000;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
