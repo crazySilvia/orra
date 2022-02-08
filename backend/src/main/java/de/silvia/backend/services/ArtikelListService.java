@@ -1,6 +1,6 @@
 package de.silvia.backend.services;
 
-import de.silvia.backend.BackendApplication;
+
 import de.silvia.backend.api.ArtikelDto;
 import de.silvia.backend.models.Artikel;
 import de.silvia.backend.models.ArtikelList;
