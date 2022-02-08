@@ -1,5 +1,3 @@
-
-
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
 div.content {
     margin-left: 125px;
@@ -8,7 +6,6 @@ div.content {
     color: #bc3908;
     background-color: #000000;
 }
-
 /*Head Background*/
 .head {
     background-color: #000000;

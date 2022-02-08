@@ -2,30 +2,31 @@
 .navbar {
     background-color: #000000;
     overflow: auto;
-    width: 100%;
     height: auto;
     position: relative;
 }
 
 /* Style the links inside the navigation bar */
-.navbar a {
+.navbar input {
     float: left;
     display: block;
     color: #bc3908;
     text-align: center;
-    padding: 14px 14px;
+    padding-top: 5px;
     text-decoration: none;
-
+    background-color: #000000;
+    border: 0;
+    width: 80px;
 }
 
 /* Change the color of links on hover */
-.navbar a:hover:not(.active) {
+.navbar input:hover:not(.active) {
     background-color: #f8c0c8;
     color: #bc3908;
 }
 
 /* Add an active class to highlight the current page */
-.navbar a.active {
+.navbar input.active {
     background-color: #000000;
     color: #f8c0c8;
 }
