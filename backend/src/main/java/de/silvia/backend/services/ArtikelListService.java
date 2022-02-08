@@ -15,7 +15,7 @@ import java.util.*;
 public class ArtikelListService {
 
     private final IArtikelListRepo artikelListRepo;
-    private static final Log LOG = LogFactory.getLog(BackendApplication.class);
+    private static final Log LOG = LogFactory.getLog(ArtikelListService.class);
 
     public ArtikelListService(IArtikelListRepo artikelListRepo) {
         this.artikelListRepo = artikelListRepo;
