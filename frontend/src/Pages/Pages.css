@@ -8,6 +8,17 @@
 }
 /*Body Background*/
 body{
-
     background-color: #000000;
+}
+input{
+    background-color: #f8c0c8;
+}
+button{
+    background-color: #bc3908;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }

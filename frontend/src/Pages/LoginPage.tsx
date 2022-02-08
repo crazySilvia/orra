@@ -9,9 +9,7 @@ export default function LoginPage(){
 
     const[name, setName] = useState<string>()
     const [password, setPassword] = useState<string>()
-
     const navigate = useNavigate()
-
     const {setJwt} = useContext(AuthContext)
 
     const onUserNameChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +34,6 @@ export default function LoginPage(){
         <div className="loginpage">
             <NavBar />
             <Header title="Anmelden"/>
-
             <form onSubmit={onSubmit}>
                 <input type="text" placeholder="Nutzername" onChange={onUserNameChange} value={name}/>
                 <input type="password" placeholder="Passwort" onChange={onPasswordChange} value={password}/>

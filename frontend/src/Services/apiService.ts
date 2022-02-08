@@ -2,7 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import {NewUserDto} from "../Api/NewUserDto";
 
 export const  listnames = () =>
-    axios.get("/api/artikelList")
+    axios.get("/api/lists")
         .then(response => response.data)
 
 /**

@@ -1,19 +1,23 @@
 /* Sidebar links */
-a {
+.sidebarelement input {
     display: block;
     color: #bc3908;
-    padding: 10px;
+    padding: 5px 10px 5px 10px;
     text-decoration: none;
+    background-color: #000000;
+    border: 0;
+    width: 105px;
 }
 
 /* Active/current link */
-a.active {
+.sidebarelement input.active {
     background-color: #000000;
     color: #f8c0c8;
+    border: 0;
 }
 
 /* Links on mouse-over */
-a:hover:not(.active) {
+.sidebarelement input:hover:not(.active) {
     background-color: #f8c0c8;
     color: #bc3908;
 }

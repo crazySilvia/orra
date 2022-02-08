@@ -13,7 +13,6 @@ import {listnames} from "./Services/apiService";
 function App() {
 
     const[articleLists, setarticleLists] = useState<ArtikelList[]>([])
-
     useEffect(() => {listnames().then(setarticleLists)},[])
 
   return (
