@@ -1,6 +1,5 @@
 package de.silvia.backend.services;
 
-import de.silvia.backend.BackendApplication;
 import de.silvia.backend.api.ArtikelDto;
 import de.silvia.backend.models.Artikel;
 import de.silvia.backend.models.ArtikelList;
@@ -15,7 +14,7 @@ import java.util.*;
 public class ArtikelListService {
 
     private final IArtikelListRepo artikelListRepo;
-    private static final Log LOG = LogFactory.getLog(BackendApplication.class);
+    private static final Log LOG = LogFactory.getLog(ArtikelListService.class);
 
     public ArtikelListService(IArtikelListRepo artikelListRepo) {
         this.artikelListRepo = artikelListRepo;

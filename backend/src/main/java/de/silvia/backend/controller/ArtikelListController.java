@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/lists")
 public class ArtikelListController {
 
     private final ArtikelListService aServ;
@@ -18,12 +18,12 @@ public class ArtikelListController {
         this.aServ = aServ;
     }
 
-    @GetMapping("artikelList")
+    @GetMapping
     public List<ArtikelList> getAll() {
         return aServ.getAllArtikelLists();
     }
 
-    @PostMapping("artikelList")
+    @PostMapping
     public ArtikelList addArtikelList(String listname) throws CloneNotSupportedException {
         return aServ.addArtikelList(listname);
     }

@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document("value(listname)")
+@Document
 public class ArtikelList {
     @Id
     @NonNull

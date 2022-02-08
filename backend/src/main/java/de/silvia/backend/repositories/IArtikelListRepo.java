@@ -12,7 +12,5 @@ public interface IArtikelListRepo extends MongoRepository<ArtikelList, String> {
 
     Optional<ArtikelList> findArtikelListByListName(String listName);
 
-    void insert(Optional<ArtikelList> optionalArtikelList);
-
     List<ArtikelList> findAllLists();
 }
