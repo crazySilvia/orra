@@ -1,6 +1,10 @@
 import axios, {AxiosResponse} from "axios";
 import {NewUserDto} from "../Api/NewUserDto";
 
+export const  listnames = () =>
+    axios.get("/api/artikelList")
+        .then(response => response.data)
+
 /**
  * Hier passiert der Login
  * @param userInput Login-Daten der User
@@ -13,7 +17,6 @@ export const login = (userInput: { password: string | undefined; name: string | 
  * Hier passiert das Registrieren
  * @param userInput Login-Daten der User
  */
-
 export const register = (userInput: NewUserDto) =>
     axios.post("/api/user/register", userInput)
         .then((response: AxiosResponse<string>) => response.data)

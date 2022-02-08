@@ -1,12 +1,12 @@
-import "./Sidebar.css"
+import './ListMenu.css';
 import React from 'react';
-import SidebarElement from "./SidebarElement";
 import {ArtikelList} from "../Model/ArtikelList";
+import SidebarElement from "./SidebarElement";
 
-export default function Sidebar({lists}:{lists:ArtikelList[]}) {
+export default function ListMenu({lists}:{lists:ArtikelList[]}){
 
     return(
-        <div className="sidebar">
+        <div className="menu">
             {lists.map((artikelList)=>
                 <SidebarElement title={artikelList.listName}/>)}
         </div>

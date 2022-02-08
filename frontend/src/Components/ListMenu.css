@@ -1,0 +1,25 @@
+/* The navigation menu */
+.menu {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #000000;
+    position: fixed;
+    overflow: auto;
+}
+
+/* Menu links */
+.menu a {
+    display: block;
+    color: #bc3908;
+    padding: 10px;
+    text-decoration: none;
+    text-align: center;
+    float: none;
+}
+
+/* Links on mouse-over */
+.menu a:hover:not(.active) {
+    background-color: #f8c0c8;
+    color: #bc3908;
+}
