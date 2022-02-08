@@ -1,6 +1,6 @@
 package de.silvia.backend.services;
 
-import de.silvia.backend.BackendApplication;
+
 import de.silvia.backend.api.ArtikelDto;
 import de.silvia.backend.models.Artikel;
 import de.silvia.backend.models.ArtikelList;
@@ -31,8 +31,9 @@ public class ArtikelListService {
     }
 
     public List<ArtikelList> getAllArtikelLists() {
+
         return artikelListRepo.findAll();
-    }
+
 
     public ArtikelList addArtikel(ArtikelDto artikelDto, String listname) {
         final Artikel artikel = Artikel.newArtikel(artikelDto.getName(), artikelDto.getAnzahl());
