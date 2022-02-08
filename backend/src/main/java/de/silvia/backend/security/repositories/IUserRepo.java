@@ -9,6 +9,4 @@ import java.util.Optional;
 public interface IUserRepo extends MongoRepository<User, String> {
 
     Optional<User> findByUsername(String username);
-
-    User insert(User user);
 }

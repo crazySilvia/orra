@@ -9,20 +9,10 @@ import org.springframework.data.annotation.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
-    @NotNull
-    private String firstName;
-
-    @NotNull
-    private String lastName;
+public class ArtikelDto {
 
     @Id
     @NotNull
-    private String userName;
-
-    @NotNull
-    private String password;
-
-    @NotNull
-    private String email;
+    private String name;
+    private int anzahl;
 }
