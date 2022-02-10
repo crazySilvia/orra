@@ -1,4 +1,4 @@
 export interface IArtikel{
     name: string
-    anzahl?: number
+    anzahl: number
 }

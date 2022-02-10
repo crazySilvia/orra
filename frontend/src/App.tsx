@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import AuthProvider from "./Context/AuthProvider";
@@ -7,26 +7,28 @@ import Homepage from "./Pages/Homepage";
 import RegisterPage from "./Pages/RegisterPage";
 import ListsPage from "./Pages/ListsPage";
 import ListPage from "./Pages/Listpages/ListPage";
-import {ArtikelList} from "./Model/ArtikelList";
-import {listnames} from "./Services/apiService";
+
+import DataProvider from "./Context/DataProvider";
+import NavBar from "./Components/NavBar";
 
 function App() {
 
-    const[articleLists, setarticleLists] = useState<ArtikelList[]>([])
-    useEffect(() => {listnames().then(setarticleLists)},[])
-
-  return (
-      <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-              <Route path="/" element={<Homepage />}/>
-              <Route path={"/login"} element={<LoginPage />}/>
-              <Route path={"/register"} element={<RegisterPage />}/>
-              <Route path={"/vorrat"} element={<ListsPage />}/>
-              <Route path={"/:listname"} element={<ListPage allLists={articleLists} />}/>
-          </ Routes>
-        </ AuthProvider>
-      </ BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <AuthProvider>
+                <DataProvider>
+                    <NavBar/>
+                    <Routes>
+                        <Route path="/" element={<Homepage/>}/>
+                        <Route path={"/login"} element={<LoginPage/>}/>
+                        <Route path={"/register"} element={<RegisterPage/>}/>
+                        <Route path={"/vorrat"} element={<ListsPage/>}/>
+                        <Route path={"/:listname"} element={<ListPage/>}/>
+                    </ Routes>
+                </DataProvider>
+            </ AuthProvider>
+        </ BrowserRouter>
+    );
 }
+
 export default App;

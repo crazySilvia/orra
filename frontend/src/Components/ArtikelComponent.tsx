@@ -2,8 +2,8 @@ import "./ArtikelComponent.css"
 import React from "react";
 import {IArtikel} from "../Model/Artikel";
 
-
 export default function ArtikelComponent({artikel}:{artikel:IArtikel}){
+
     return(
         <div className="component">
             <div className="teil">
@@ -19,6 +19,4 @@ export default function ArtikelComponent({artikel}:{artikel:IArtikel}){
             </div>
         </div>
     )
-
-
 }

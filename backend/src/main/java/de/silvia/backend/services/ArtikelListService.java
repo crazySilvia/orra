@@ -30,6 +30,10 @@ public class ArtikelListService {
         return artikelListRepo.insert(ArtikelList.newArtikelList(listname, artikelList));
     }
 
+    public void deleteArtikelList(String listName){
+        artikelListRepo.deleteById(listName);
+    }
+
     public List<ArtikelList> getAllArtikelLists() {
         return artikelListRepo.findAll();
     }

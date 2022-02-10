@@ -14,4 +14,5 @@ public interface IArtikelListRepo extends MongoRepository<ArtikelList, String> {
     Optional<ArtikelList> findArtikelListByListName(String listName);
 
     @NotNull List<ArtikelList> findAll();
+
 }

@@ -1,8 +1,19 @@
 import axios, {AxiosResponse} from "axios";
 import {NewUserDto} from "../Api/NewUserDto";
+import {NewListDto} from "../Api/NewListDto";
 
-export const  listnames = () =>
-    axios.get("/api/lists")
+export const deleteList = (listName: string, token?: string) =>
+    axios.delete(`/api/lists/${listName}`, token ? {headers: {"Authorization": "Bearer " + token}} : {})
+        .then(response => response.data)
+
+export const saveNewList = (newListDto: NewListDto, token?: string) => {
+    console.log(newListDto.listName)
+    return axios.post("/api/lists", newListDto, token ? {headers: {"Authorization": "Bearer " + token}} : {})
+        .then(response => response.data)
+}
+
+export const listnames = (token?: string) =>
+    axios.get("/api/lists", token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
 
 /**

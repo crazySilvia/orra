@@ -1,6 +1,7 @@
 package de.silvia.backend.controller;
 
 import de.silvia.backend.api.ArtikelDto;
+import de.silvia.backend.api.ListDto;
 import de.silvia.backend.models.ArtikelList;
 import de.silvia.backend.services.ArtikelListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,13 @@ public class ArtikelListController {
     }
 
     @PostMapping
-    public ArtikelList addArtikelList(@RequestBody String listname) throws CloneNotSupportedException {
-        return aServ.addArtikelList(listname);
+    public ArtikelList addArtikelList(@RequestBody ListDto listDto) throws CloneNotSupportedException {
+        return aServ.addArtikelList(listDto.getListName());
+    }
+
+    @DeleteMapping("/{listName}")
+    public void deleteList(@PathVariable String listName){
+        aServ.deleteArtikelList(listName);
     }
 
     @PatchMapping("{listname}")
@@ -33,8 +39,8 @@ public class ArtikelListController {
         return aServ.addArtikel(artikelDto, listname);
     }
 
-    @DeleteMapping("{listname}")
+    /*@DeleteMapping("{listname}")
     public void delArticle(@RequestBody ArtikelDto artikelDto, @PathVariable String listname){
         aServ.deleteArtikel(artikelDto, listname);
-    }
+    }*/
 }

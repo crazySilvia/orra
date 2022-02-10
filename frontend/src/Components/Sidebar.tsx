@@ -1,14 +1,14 @@
 import "./Sidebar.css"
 import React from 'react';
 import SidebarElement from "./SidebarElement";
-import {ArtikelList} from "../Model/ArtikelList";
+import {IArtikelList} from "../Model/ArtikelList";
 
-export default function Sidebar({lists}:{lists:ArtikelList[]}) {
+export default function Sidebar({lists}:{lists:IArtikelList[]}) {
 
     return(
         <div className="sidebar">
-            {lists.map((artikelList)=>
-                <SidebarElement title={artikelList.listName}/>)}
+            {lists.map((artikelList, i)=>
+                <SidebarElement title={artikelList.listName} key={i}/>)}
         </div>
     )
 }
