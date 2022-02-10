@@ -1,5 +1,6 @@
 package de.silvia.backend.models;
 
+import de.silvia.backend.api.ArtikelDto;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
@@ -13,10 +14,9 @@ public class Artikel {
     private String name;
     private int anzahl;
 
-    public static Artikel newArtikel(String name, int anzahl) {
-        return Artikel.builder()
-                .name(name)
-                .anzahl(anzahl)
-                .build();
+    public Artikel(ArtikelDto artikelDto){
+        super();
+        this.name = artikelDto.getName();
+        this.anzahl = artikelDto.getAnzahl();
     }
 }

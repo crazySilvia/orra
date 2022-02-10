@@ -1,6 +1,5 @@
 package de.silvia.backend.services;
 
-
 import de.silvia.backend.api.ArtikelDto;
 import de.silvia.backend.models.Artikel;
 import de.silvia.backend.models.ArtikelList;
@@ -39,22 +38,25 @@ public class ArtikelListService {
     }
 
     public ArtikelList addArtikel(ArtikelDto artikelDto, String listname) {
-        final Artikel artikel = Artikel.newArtikel(artikelDto.getName(), artikelDto.getAnzahl());
-        Optional<ArtikelList> optionalArtikelList = artikelListRepo.findArtikelListByListName(listname);
-        if(optionalArtikelList.isEmpty()) {
-            throw new NoSuchElementException("Liste mit Namen " + listname + " nicht gefunden!");
-        }
-        ArtikelList artikelList = optionalArtikelList.get();
+        final Artikel artikel = new Artikel(artikelDto);
+        ArtikelList artikelList = getArtikelList(listname);
         artikelList.addArticle(artikel);
         return artikelListRepo.save(artikelList);
     }
 
-    public void deleteArtikel(ArtikelDto artikelDto, String listname){
-        final String id = artikelDto.getName();
+    public ArtikelList getArtikelList(String listname){
         Optional<ArtikelList> optionalArtikelList = artikelListRepo.findArtikelListByListName(listname);
         if(optionalArtikelList.isEmpty()) {
             throw new NoSuchElementException("Liste mit Namen " + listname + " nicht gefunden!");
         }
-        artikelListRepo.deleteById(id);
+        return optionalArtikelList.get();
+    }
+
+    public void deleteArtikel(String listName, String artikelName){
+        ArtikelList artikelList = getArtikelList(listName);
+        List<Artikel> updateArtikel = artikelList.getArtikelList().stream().filter((artikel) ->
+                (!artikel.getName().equals(artikelName))).toList();
+        artikelList.setArtikelList(updateArtikel);
+        artikelListRepo.save(artikelList);
     }
 }

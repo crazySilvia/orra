@@ -27,4 +27,3 @@ public class ArtikelList {
         artikelList.add(article);
     }
 }
-

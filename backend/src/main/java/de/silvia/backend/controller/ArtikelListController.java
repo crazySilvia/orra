@@ -34,13 +34,13 @@ public class ArtikelListController {
         aServ.deleteArtikelList(listName);
     }
 
-    @PatchMapping("{listname}")
+    @PatchMapping("/{listname}")
     public ArtikelList addArticle(@RequestBody ArtikelDto artikelDto, @PathVariable String listname){
         return aServ.addArtikel(artikelDto, listname);
     }
 
-    /*@DeleteMapping("{listname}")
-    public void delArticle(@RequestBody ArtikelDto artikelDto, @PathVariable String listname){
-        aServ.deleteArtikel(artikelDto, listname);
-    }*/
+    @DeleteMapping(value = "/{listname}/remove/{artikelName}")
+    public void delArticle(@PathVariable String artikelName, @PathVariable String listname){
+        aServ.deleteArtikel(listname, artikelName);
+    }
 }
