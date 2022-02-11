@@ -21,7 +21,7 @@ export default function AddListField() {
             listName: input
         }
         saveNewList(newListDto, token)
-            .then(() => setAllList([...allList, {listName: input, artikelList: []}]))
+            .then(() => setAllList([...allList, {listName: input, artikels: []}]))
             .then(() => {
                 navigate('/' + newListDto.listName)
             })

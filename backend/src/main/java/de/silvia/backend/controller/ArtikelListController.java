@@ -34,13 +34,23 @@ public class ArtikelListController {
         aServ.deleteArtikelList(listName);
     }
 
-    @PatchMapping("/{listname}")
-    public ArtikelList addArticle(@RequestBody ArtikelDto artikelDto, @PathVariable String listname){
-        return aServ.addArtikel(artikelDto, listname);
+    @PatchMapping("/{listName}")
+    public ArtikelList addArticle(@RequestBody ArtikelDto artikelDto, @PathVariable String listName){
+        return aServ.addArtikel(artikelDto, listName);
     }
 
-    @DeleteMapping(value = "/{listname}/remove/{artikelName}")
-    public void delArticle(@PathVariable String artikelName, @PathVariable String listname){
-        aServ.deleteArtikel(listname, artikelName);
+    @DeleteMapping(value = "/{listName}/remove/{artikelName}")
+    public void delArticle(@PathVariable String artikelName, @PathVariable String listName){
+        aServ.deleteArtikel(listName, artikelName);
+    }
+
+    @PatchMapping("/{listName}/decrease/{artikelName}")
+    public void decreaseArticle(@PathVariable String artikelName, @PathVariable String listName){
+        aServ.decreaseArtikel(listName, artikelName);
+    }
+
+    @PatchMapping("/{listName}/increase/{artikelName}")
+    public void increaseArticle(@PathVariable String artikelName, @PathVariable String listName){
+        aServ.increaseArtikel(listName, artikelName);
     }
 }

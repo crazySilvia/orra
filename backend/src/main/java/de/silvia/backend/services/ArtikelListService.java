@@ -54,9 +54,31 @@ public class ArtikelListService {
 
     public void deleteArtikel(String listName, String artikelName){
         ArtikelList artikelList = getArtikelList(listName);
-        List<Artikel> updateArtikel = artikelList.getArtikelList().stream().filter((artikel) ->
-                (!artikel.getName().equals(artikelName))).toList();
-        artikelList.setArtikelList(updateArtikel);
+        List<Artikel> updateArtikel = artikelList.getArtikels()
+                .stream()
+                .filter((artikel) -> (!artikel.getName().equals(artikelName)))
+                .toList();
+        artikelList.setArtikels(updateArtikel);
+        artikelListRepo.save(artikelList);
+    }
+
+    public void decreaseArtikel(String listName, String artikelName){
+        ArtikelList artikelList = getArtikelList(listName);
+        List<Artikel> artList = artikelList.getArtikels()
+                .stream()
+                .map((artikel) -> (artikel.getName().equals(artikelName)) ? artikel.decreaseArtikel():artikel)
+                .toList();
+        artikelList.setArtikels(artList);
+        artikelListRepo.save(artikelList);
+    }
+
+    public void increaseArtikel(String listName, String artikelName){
+        ArtikelList artikelList = getArtikelList(listName);
+        List<Artikel> artList = artikelList.getArtikels()
+                .stream()
+                .map((artikel) -> (artikel.getName().equals(artikelName)) ? artikel.increaseArtikel():artikel)
+                .toList();
+        artikelList.setArtikels(artList);
         artikelListRepo.save(artikelList);
     }
 }

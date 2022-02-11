@@ -5,7 +5,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import ArtikelComponent from "../../Components/ArtikelComponent";
 import Sidebar from "../../Components/Sidebar";
 import {DataContext} from "../../Context/DataProvider";
-import {deleteArticle, deleteList} from "../../Services/apiService";
+import {decreaseArticle, deleteArticle, deleteList, increaseArticle} from "../../Services/apiService";
 
 export default function ListPage() {
     const {allList, refresh} = useContext(DataContext)
@@ -37,6 +37,22 @@ export default function ListPage() {
             .catch((er: any) => console.error(er))
     }
 
+    const increaseArtikel = (artikelToIncrease: string) => {
+        increaseArticle(articleList.listName, artikelToIncrease)
+            .then(() => {
+                refresh()
+            })
+            .catch((er: any) => console.error(er))
+    }
+
+    const decreaseArtikel = (artikelToDecrease: string) => {
+        decreaseArticle(articleList.listName, artikelToDecrease)
+            .then(() => {
+                refresh()
+            })
+            .catch((er: any) => console.error(er))
+    }
+    console.log(articleList)
     return (
         <div className="page">
             <div className="head">
@@ -45,9 +61,11 @@ export default function ListPage() {
             <Sidebar lists={allList}/>
             <div className="content">
                 {articleList ?
-                    articleList.artikelList.map((Artikel, i) =>
+                    articleList.artikels.map((Artikel, i) =>
                         <ArtikelComponent artikel={Artikel} key={i}
-                                          removeArtikel={artikelToRemove => delArtikel(artikelToRemove)}/>)
+                                          removeArtikel={artikelToRemove => delArtikel(artikelToRemove)}
+                                          decreaseAnzahl={artikelToDecrease => decreaseArtikel(artikelToDecrease)}
+                                          increaseAnzahl={artikelToIncrease => increaseArtikel(artikelToIncrease)}/>)
                     : "Liste existiert nicht"}
                 <button onClick={entfernen}>Liste löschen</button>
             </div>

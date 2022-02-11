@@ -19,4 +19,14 @@ public class Artikel {
         this.name = artikelDto.getName();
         this.anzahl = artikelDto.getAnzahl();
     }
+
+    public Artikel decreaseArtikel(){
+        this.anzahl--;
+        return this;
+    }
+
+    public Artikel increaseArtikel(){
+        this.anzahl++;
+        return this;
+    }
 }
