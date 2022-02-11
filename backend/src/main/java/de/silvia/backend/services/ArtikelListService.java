@@ -1,6 +1,5 @@
 package de.silvia.backend.services;
 
-
 import de.silvia.backend.api.ArtikelDto;
 import de.silvia.backend.models.Artikel;
 import de.silvia.backend.models.ArtikelList;
@@ -30,27 +29,56 @@ public class ArtikelListService {
         return artikelListRepo.insert(ArtikelList.newArtikelList(listname, artikelList));
     }
 
+    public void deleteArtikelList(String listName){
+        artikelListRepo.deleteById(listName);
+    }
+
     public List<ArtikelList> getAllArtikelLists() {
         return artikelListRepo.findAll();
     }
 
-    public ArtikelList addArtikel(ArtikelDto artikelDto, String listname) {
-        final Artikel artikel = Artikel.newArtikel(artikelDto.getName(), artikelDto.getAnzahl());
-        Optional<ArtikelList> optionalArtikelList = artikelListRepo.findArtikelListByListName(listname);
-        if(optionalArtikelList.isEmpty()) {
-            throw new NoSuchElementException("Liste mit Namen " + listname + " nicht gefunden!");
-        }
-        ArtikelList artikelList = optionalArtikelList.get();
+    public ArtikelList addArtikel(String listname, ArtikelDto artikelDto) {
+        final Artikel artikel = new Artikel(artikelDto);
+        ArtikelList artikelList = getArtikelList(listname);
         artikelList.addArticle(artikel);
         return artikelListRepo.save(artikelList);
     }
 
-    public void deleteArtikel(ArtikelDto artikelDto, String listname){
-        final String id = artikelDto.getName();
+    public ArtikelList getArtikelList(String listname){
         Optional<ArtikelList> optionalArtikelList = artikelListRepo.findArtikelListByListName(listname);
         if(optionalArtikelList.isEmpty()) {
             throw new NoSuchElementException("Liste mit Namen " + listname + " nicht gefunden!");
         }
-        artikelListRepo.deleteById(id);
+        return optionalArtikelList.get();
+    }
+
+    public void deleteArtikel(String listName, String artikelName){
+        ArtikelList artikelList = getArtikelList(listName);
+        List<Artikel> updateArtikel = artikelList.getArtikels()
+                .stream()
+                .filter((artikel) -> (!artikel.getName().equals(artikelName)))
+                .toList();
+        artikelList.setArtikels(updateArtikel);
+        artikelListRepo.save(artikelList);
+    }
+
+    public void decreaseArtikel(String listName, String artikelName){
+        ArtikelList artikelList = getArtikelList(listName);
+        List<Artikel> artList = artikelList.getArtikels()
+                .stream()
+                .map((artikel) -> (artikel.getName().equals(artikelName)) ? artikel.decreaseArtikel():artikel)
+                .toList();
+        artikelList.setArtikels(artList);
+        artikelListRepo.save(artikelList);
+    }
+
+    public void increaseArtikel(String listName, String artikelName){
+        ArtikelList artikelList = getArtikelList(listName);
+        List<Artikel> artList = artikelList.getArtikels()
+                .stream()
+                .map((artikel) -> (artikel.getName().equals(artikelName)) ? artikel.increaseArtikel():artikel)
+                .toList();
+        artikelList.setArtikels(artList);
+        artikelListRepo.save(artikelList);
     }
 }

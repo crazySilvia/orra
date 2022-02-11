@@ -2,8 +2,17 @@ import "./ArtikelComponent.css"
 import React from "react";
 import {IArtikel} from "../Model/Artikel";
 
+interface ArtikelProps{
+    artikel: IArtikel
+    removeArtikel(artikelToRemove: string):void
+    decreaseAnzahl(artikelToDecrease: string):void
+    increaseAnzahl(artikelToIncrease: string):void
+}
 
-export default function ArtikelComponent({artikel}:{artikel:IArtikel}){
+export default function ArtikelComponent(props:ArtikelProps){
+
+    const {artikel, removeArtikel, decreaseAnzahl, increaseAnzahl} = props;
+
     return(
         <div className="component">
             <div className="teil">
@@ -13,12 +22,10 @@ export default function ArtikelComponent({artikel}:{artikel:IArtikel}){
                 {artikel.name}
             </div>
             <div className="teil">
-                <button >+</button>
-                <button >-</button>
-                <button >x</button>
+                <button onClick={()=>{increaseAnzahl(artikel.name);}}>+</button>
+                <button onClick={()=>{decreaseAnzahl(artikel.name);}}>-</button>
+                <button onClick={()=>{removeArtikel(artikel.name);}}>x</button>
             </div>
         </div>
     )
-
-
 }

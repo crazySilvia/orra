@@ -1,22 +1,18 @@
-import React, {useEffect, useState} from "react";
-import NavBar from "../Components/NavBar";
+import React, {useContext} from "react";
 import Header from "../Components/Header";
 import ListMenu from "../Components/ListMenu";
-import {ArtikelList} from "../Model/ArtikelList";
-import {listnames} from "../Services/apiService";
+import AddListField from "../Components/AddListField";
+import {DataContext} from "../Context/DataProvider";
 
-export default function ListsPage(){
+export default function ListsPage() {
+    
+    const {allList} = useContext(DataContext)
 
-    const[articleLists, setarticleLists] = useState<ArtikelList[]>([])
-    useEffect(() => {listnames().then(setarticleLists)},[])
-
-    return(
+    return (
         <div className="page">
-            <NavBar />
-            <Header title={"Vorrat"} />
-            <body>
-                <ListMenu lists={articleLists}/>
-            </body>
+            <Header title={"Vorrat"}/>
+            <AddListField/>
+            <ListMenu lists={allList}/>
         </div>
     )
 }

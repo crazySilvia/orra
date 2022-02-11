@@ -1,19 +1,17 @@
 import React, {ChangeEvent, FormEvent, useContext, useState} from "react";
 import Header from "../Components/Header";
-import NavBar from "../Components/NavBar";
 import {AuthContext} from "../Context/AuthProvider";
 import {useNavigate} from "react-router-dom";
 import {register} from "../Services/apiService";
 import {NewUserDto} from "../Api/NewUserDto";
 
+export default function RegisterPage() {
 
-export default function RegisterPage(){
-
-    const[userName, setUserName] = useState<string>()
+    const [userName, setUserName] = useState<string>()
     const [password, setPassword] = useState<string>()
-    const[firstName, setFirstName] = useState<string>()
-    const[lastName, setLastName] = useState<string>()
-    const[email, setEmail] = useState<string>()
+    const [firstName, setFirstName] = useState<string>()
+    const [lastName, setLastName] = useState<string>()
+    const [email, setEmail] = useState<string>()
 
     const navigate = useNavigate()
     const {setJwt} = useContext(AuthContext)
@@ -38,7 +36,7 @@ export default function RegisterPage(){
         setEmail(event.target.value)
     }
 
-    const  newUserDto = {firstName, lastName, userName, password, email} as NewUserDto;
+    const newUserDto = {firstName, lastName, userName, password, email} as NewUserDto;
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -48,20 +46,17 @@ export default function RegisterPage(){
             .catch((er) => console.error(er))
     }
 
-
-    return(
+    return (
         <div className="registerpage">
-        <NavBar />
-        <Header title="Account anlegen"/>
-
-        <form onSubmit={onSubmit}>
-            <input type="text" placeholder="Vorname" onChange={onFirstNameChange} value={firstName}/>
-            <input type="text" placeholder="Nachname" onChange={onLastNameChange} value={lastName}/>
-            <input type="email" placeholder="E-Mail" onChange={onEmailChange} value={email}/>
-            <input type="text" placeholder="Nickname" onChange={onUserNameChange} value={userName}/>
-            <input type="password" placeholder="Passwort" onChange={onPasswordChange} value={password}/>
-            <button type="submit">Registrieren</button>
-        </form>
+            <Header title="Account anlegen"/>
+            <form onSubmit={onSubmit}>
+                <input type="text" placeholder="Vorname" onChange={onFirstNameChange} value={firstName}/>
+                <input type="text" placeholder="Nachname" onChange={onLastNameChange} value={lastName}/>
+                <input type="email" placeholder="E-Mail" onChange={onEmailChange} value={email}/>
+                <input type="text" placeholder="Nickname" onChange={onUserNameChange} value={userName}/>
+                <input type="password" placeholder="Passwort" onChange={onPasswordChange} value={password}/>
+                <button type="submit">Registrieren</button>
+            </form>
         </div>
-)
+    )
 }

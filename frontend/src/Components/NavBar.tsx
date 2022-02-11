@@ -6,16 +6,16 @@ export default function NavBar() {
     return (
         <div className="navbar">
             <Link to={"/"}>
-                <input className="button" value={"Start"} />
+                Start
             </Link>
             <Link to={"/vorrat"}>
-                <input className="button" value={"Vorrat"} />
+                Vorrat
             </Link>
             <Link to={"/login"}>
-                <input className="button" value={"Login"} />
+                Login
             </Link>
             <Link to={"/register"}>
-                <input className="button" value={"Registrieren"} />
+                Registrieren
             </Link>
         </div>
     )

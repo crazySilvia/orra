@@ -1,14 +1,14 @@
 import './ListMenu.css';
 import React from 'react';
-import {ArtikelList} from "../Model/ArtikelList";
 import SidebarElement from "./SidebarElement";
+import {IArtikelList} from "../Model/ArtikelList";
 
-export default function ListMenu({lists}:{lists:ArtikelList[]}){
+export default function ListMenu({lists}:{lists:IArtikelList[]}){
 
     return(
         <div className="menu">
-            {lists.map((artikelList)=>
-                <SidebarElement title={artikelList.listName}/>)}
+            {lists.map((artikelList, i)=>
+                <SidebarElement title={artikelList.listName} key={i}/>)}
         </div>
     )
 }

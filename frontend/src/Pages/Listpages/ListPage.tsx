@@ -1,35 +1,103 @@
 import './ListPage.css';
-import React, {useEffect, useState} from "react";
-import NavBar from "../../Components/NavBar";
+import React, {ChangeEvent, FormEvent, useContext, useState} from "react";
 import Header from "../../Components/Header";
-import {useParams} from "react-router-dom";
-import {ArtikelList} from "../../Model/ArtikelList";
+import {useNavigate, useParams} from "react-router-dom";
 import ArtikelComponent from "../../Components/ArtikelComponent";
 import Sidebar from "../../Components/Sidebar";
-import {listnames} from "../../Services/apiService";
+import {DataContext} from "../../Context/DataProvider";
+import {decreaseArticle, deleteArticle, deleteList, increaseArticle, saveNewArticle} from "../../Services/apiService";
+import {ArticleDto} from "../../Api/ArticleDto";
+import {AuthContext} from "../../Context/AuthProvider";
 
-export default function ListPage({allLists}:{allLists:ArtikelList[]}){
+export default function ListPage() {
+    const {allList, refresh} = useContext(DataContext)
+    const {listname} = useParams()
+    const articleList = allList.find((List) => List.listName === listname)
+    const navigate = useNavigate()
+    const [input, setInput] = useState<string>("")
+    const [zahl] = useState<number>(1)
+    const {token} = useContext(AuthContext)
 
-    const{listname}=useParams()
-    const articleList = allLists.find((List)=> List.listName === listname)
-    const[articleLists, setarticleLists] = useState<ArtikelList[]>([])
-    useEffect(() => {listnames().then(setarticleLists)},[])
-
-    if(!articleList){
-        return <div>
-            Liste existiert nicht
-        </div>
+    if (!articleList) {
+        navigate('/')
+        return (
+            <div>Liste existiert nicht</div>)
     }
-    return(
+    const entfernen = () => {
+        deleteList(articleList.listName)
+            .then(() => {
+                refresh()
+            })
+            .then(() => {
+                navigate('/vorrat')
+            })
+            .catch((er: any) => console.error(er))
+    }
+
+    const delArtikel = (artikelToRemove: string) => {
+        deleteArticle(articleList.listName, artikelToRemove)
+            .then(() => {
+                refresh()
+            })
+            .catch((er: any) => console.error(er))
+    }
+
+    const increaseArtikel = (artikelToIncrease: string) => {
+        increaseArticle(articleList.listName, artikelToIncrease)
+            .then(() => {
+                refresh()
+            })
+            .catch((er: any) => console.error(er))
+    }
+
+    const decreaseArtikel = (artikelToDecrease: string) => {
+        decreaseArticle(articleList.listName, artikelToDecrease)
+            .then(() => {
+                refresh()
+            })
+            .catch((er: any) => console.error(er))
+    }
+
+    const handleChangeName = (event: ChangeEvent<HTMLInputElement>) => {
+        setInput(event.target.value)
+    }
+
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const articleDto: ArticleDto = {
+            name: input,
+            anzahl: zahl
+        }
+        saveNewArticle(articleList.listName, articleDto, token)
+            .then(() => {
+                refresh()
+            })
+            .catch((er: any) => console.error(er))
+    }
+
+    return (
         <div className="page">
             <div className="head">
-                <NavBar />
-                <Header title={articleList!.listName} />
+                <Header title={articleList?.listName || "unbekannte Liste"}/>
             </div>
-            <Sidebar lists={articleLists}/>
+            <Sidebar lists={allList}/>
             <div className="content">
-                {articleList.artikelList.map((Artikel)=>
-                    <ArtikelComponent artikel={Artikel}/>)}
+                <form onSubmit={handleSubmit}>
+                    <div className="addArticle_input">
+                        <input type="text" placeholder="Artikel" onChange={handleChangeName} value={input}/>
+                    </div>
+                    <div className="addArticle_button">
+                        <button type={"submit"}>Artikel hinzufügen</button>
+                    </div>
+                </form>
+                {articleList ?
+                    articleList.artikels.map((Artikel, i) =>
+                        <ArtikelComponent artikel={Artikel} key={i}
+                                          removeArtikel={artikelToRemove => delArtikel(artikelToRemove)}
+                                          decreaseAnzahl={artikelToDecrease => decreaseArtikel(artikelToDecrease)}
+                                          increaseAnzahl={artikelToIncrease => increaseArtikel(artikelToIncrease)}/>)
+                    : "Liste existiert nicht"}
+                <button onClick={entfernen}>Liste löschen</button>
             </div>
         </div>
     )

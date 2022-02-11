@@ -14,17 +14,17 @@ public class ArtikelList {
     @Id
     @NonNull
     private String listName;
-    private List<Artikel> artikelList;
+    private List<Artikel> artikels;
 
     public static ArtikelList newArtikelList(String listName, List<Artikel> artikelList) {
         return ArtikelList.builder()
                 .listName(listName)
-                .artikelList(artikelList)
+                .artikels(artikelList)
                 .build();
     }
 
     public void addArticle(Artikel article){
-        artikelList.add(article);
+        artikels.add(article);
     }
-}
 
+}
