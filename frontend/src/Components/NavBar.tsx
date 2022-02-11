@@ -11,6 +11,9 @@ export default function NavBar() {
             <Link to={"/vorrat"}>
                 Vorrat
             </Link>
+            <Link to={"/rezepte"}>
+                Rezepte
+            </Link>
             <Link to={"/login"}>
                 Login
             </Link>

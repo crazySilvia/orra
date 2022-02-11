@@ -1,30 +1,52 @@
-import React, {useEffect} from "react";
-import {createContext, useState} from "react";
+import React, {createContext, useEffect, useState} from "react";
 import {IArtikelList} from "../Model/ArtikelList";
-import {listnames} from "../Services/apiService";
+import {listnames, recipes} from "../Services/apiService";
+import {IRecipe} from "../Model/Recipe";
 
 
-export interface IDataContextType{
+export interface IDataContextType {
     allList: IArtikelList[],
-    setAllList: (allList: IArtikelList[]) => void
-    refresh: ()=>void
+    allRecipe: IRecipe[],
+    setAllRecipe: (allRecipe: IRecipe[]) => void,
+    setAllList: (allList: IArtikelList[]) => void,
+    refresh: () => void,
+    refreshRecipes: () => void
 }
 
 export const DataContext = createContext<IDataContextType>({
-    setAllList: () => {},
+    setAllList: () => {
+    },
     allList: [],
-    refresh: () => {}
+    setAllRecipe: () => {
+    },
+    allRecipe: [],
+    refresh: () => {
+    },
+    refreshRecipes: () => {
+    }
 })
 
-export default function DataProvider({children} : {children: React.ReactNode}) {
+export default function DataProvider({children}: { children: React.ReactNode }) {
     const [allList, setAllList] = useState<IArtikelList[]>([])
 
-    useEffect(() => {refresh()},[])
+    const [allRecipe, setAllRecipe] = useState<IRecipe[]>([])
 
-    const refresh = () => {listnames().then(setAllList)}
+    useEffect(() => {
+            refresh()
+            refreshRecipes()
+        }
+        , [])
+
+    const refresh = () => {
+        listnames().then(setAllList)
+    }
+
+    const refreshRecipes = () => {
+        recipes().then(setAllRecipe)
+    }
 
     return (
-        <DataContext.Provider value={{allList, setAllList, refresh}}>
+        <DataContext.Provider value={{allList, setAllList, allRecipe, setAllRecipe, refresh, refreshRecipes}}>
             {children}
         </DataContext.Provider>
     )

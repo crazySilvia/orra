@@ -3,6 +3,17 @@ import {NewUserDto} from "../Api/NewUserDto";
 import {NewListDto} from "../Api/NewListDto";
 import {ArticleDto} from "../Api/ArticleDto";
 
+
+/**
+ * Hier werden die Rezepte des User abgerufen
+ * @param token usertoken
+ */
+export const recipes = (token?: string) =>
+    axios.get("/api/recipes", token ? {headers: {"Authorization": "Bearer " + token}} : {})
+        .then(response => response.data)
+
+
+
 export const saveNewArticle = (listName: string, articleDto: ArticleDto, token?: string) =>
     axios.post(`/api/lists/${listName}`, articleDto, token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)

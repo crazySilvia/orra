@@ -9,6 +9,7 @@ import ListsPage from "./Pages/ListsPage";
 import ListPage from "./Pages/Listpages/ListPage";
 import DataProvider from "./Context/DataProvider";
 import NavBar from "./Components/NavBar";
+import RecipesPage from "./Pages/RecipesPage";
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
                         <Route path={"/register"} element={<RegisterPage/>}/>
                         <Route path={"/vorrat"} element={<ListsPage/>}/>
                         <Route path={"/:listname"} element={<ListPage/>}/>
+                        <Route path={"/rezepte"} element={<RecipesPage/>}/>
                     </ Routes>
                 </DataProvider>
             </ AuthProvider>
