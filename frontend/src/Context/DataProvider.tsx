@@ -18,6 +18,7 @@ export const DataContext = createContext<IDataContextType>({
 
 export default function DataProvider({children} : {children: React.ReactNode}) {
     const [allList, setAllList] = useState<IArtikelList[]>([])
+
     useEffect(() => {refresh()},[])
 
     const refresh = () => {listnames().then(setAllList)}

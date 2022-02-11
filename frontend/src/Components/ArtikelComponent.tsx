@@ -2,7 +2,6 @@ import "./ArtikelComponent.css"
 import React from "react";
 import {IArtikel} from "../Model/Artikel";
 
-
 interface ArtikelProps{
     artikel: IArtikel
     removeArtikel(artikelToRemove: string):void

@@ -1,17 +1,22 @@
 import './ListPage.css';
-import React, {useContext} from "react";
+import React, {ChangeEvent, FormEvent, useContext, useState} from "react";
 import Header from "../../Components/Header";
 import {useNavigate, useParams} from "react-router-dom";
 import ArtikelComponent from "../../Components/ArtikelComponent";
 import Sidebar from "../../Components/Sidebar";
 import {DataContext} from "../../Context/DataProvider";
-import {decreaseArticle, deleteArticle, deleteList, increaseArticle} from "../../Services/apiService";
+import {decreaseArticle, deleteArticle, deleteList, increaseArticle, saveNewArticle} from "../../Services/apiService";
+import {ArticleDto} from "../../Api/ArticleDto";
+import {AuthContext} from "../../Context/AuthProvider";
 
 export default function ListPage() {
     const {allList, refresh} = useContext(DataContext)
     const {listname} = useParams()
     const articleList = allList.find((List) => List.listName === listname)
     const navigate = useNavigate()
+    const [input, setInput] = useState<string>("")
+    const [zahl] = useState<number>(1)
+    const {token} = useContext(AuthContext)
 
     if (!articleList) {
         navigate('/')
@@ -52,7 +57,24 @@ export default function ListPage() {
             })
             .catch((er: any) => console.error(er))
     }
-    console.log(articleList)
+
+    const handleChangeName = (event: ChangeEvent<HTMLInputElement>) => {
+        setInput(event.target.value)
+    }
+
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const articleDto: ArticleDto = {
+            name: input,
+            anzahl: zahl
+        }
+        saveNewArticle(articleList.listName, articleDto, token)
+            .then(() => {
+                refresh()
+            })
+            .catch((er: any) => console.error(er))
+    }
+
     return (
         <div className="page">
             <div className="head">
@@ -60,6 +82,14 @@ export default function ListPage() {
             </div>
             <Sidebar lists={allList}/>
             <div className="content">
+                <form onSubmit={handleSubmit}>
+                    <div className="addArticle_input">
+                        <input type="text" placeholder="Artikel" onChange={handleChangeName} value={input}/>
+                    </div>
+                    <div className="addArticle_button">
+                        <button type={"submit"}>Artikel hinzufügen</button>
+                    </div>
+                </form>
                 {articleList ?
                     articleList.artikels.map((Artikel, i) =>
                         <ArtikelComponent artikel={Artikel} key={i}

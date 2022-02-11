@@ -34,9 +34,9 @@ public class ArtikelListController {
         aServ.deleteArtikelList(listName);
     }
 
-    @PatchMapping("/{listName}")
+    @PostMapping("/{listName}")
     public ArtikelList addArticle(@RequestBody ArtikelDto artikelDto, @PathVariable String listName){
-        return aServ.addArtikel(artikelDto, listName);
+        return aServ.addArtikel(listName, artikelDto);
     }
 
     @DeleteMapping(value = "/{listName}/remove/{artikelName}")
