@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface IArtikelListRepo extends MongoRepository<ArtikelList, String> {
 
-    Optional<ArtikelList> findArtikelListByListName(String listName);
+    Optional<ArtikelList> findArtikelListById(String id);
 
     @NotNull List<ArtikelList> findAll();
 }

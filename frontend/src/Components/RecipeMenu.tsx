@@ -7,7 +7,7 @@ export default function RecipeMenu({lists}:{lists:IRecipe[]}){
     return(
         <div className="menu">
             {lists.map((recipe: IRecipe, i)=>
-            <SidebarElement title={recipe.recipeName} key={i}/>)}
+            <SidebarElement title={recipe.recipeName} id={recipe.id} key={i}/>)}
         </div>
     )
 }

@@ -1,5 +1,6 @@
 package de.silvia.backend.services;
 
+import de.silvia.backend.security.models.LoginData;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
-import java.util.Map;
+import java.util.HashMap;
 
 @Service
 public class JWTUtils {
@@ -17,14 +18,13 @@ public class JWTUtils {
     @Value(value = "${secret}")
     private String secret;
 
-
-    public String createToken(Map<String, Object> claims, String subject) {
+    public String createToken(LoginData user) {
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
+                .setClaims(new HashMap<>())
+                .setSubject(user.getName())
                 //Ablauffrist:
                 .setIssuedAt(Date.from(Instant.now()))
-                .setExpiration(Date.from(Instant.now().plus(Duration.ofHours(4))))
+                .setExpiration(Date.from(Instant.now().plus(Duration.ofHours(12))))
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
@@ -45,6 +45,6 @@ public class JWTUtils {
 
     public Boolean validateToken(String token, String username) {
         String userName = extractUserName(token);
-        return (userName.equals(username) && !isTokenExpired(token));
+        return (userName.equals(username) && !isTokenExpired(token) && !token.isBlank());
     }
 }

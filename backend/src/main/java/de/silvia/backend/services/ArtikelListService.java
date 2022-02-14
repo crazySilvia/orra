@@ -16,17 +16,18 @@ public class ArtikelListService {
     private final IArtikelListRepo artikelListRepo;
     private static final Log LOG = LogFactory.getLog(ArtikelListService.class);
 
-    public ArtikelListService(IArtikelListRepo artikelListRepo) {
+    public ArtikelListService(IArtikelListRepo artikelListRepo)
+    {
         this.artikelListRepo = artikelListRepo;
     }
 
-    public ArtikelList addArtikelList(String listname) throws CloneNotSupportedException {
-        if(artikelListRepo.findArtikelListByListName(listname).isPresent()){
-            throw new CloneNotSupportedException("Liste mit Namen " + listname + " gibt es schon!");
+    public ArtikelList addArtikelList(String id) throws CloneNotSupportedException {
+        if(artikelListRepo.findArtikelListById(id).isPresent()){
+            throw new CloneNotSupportedException("Liste mit id " + id + " gibt es schon!");
         }
         List<Artikel> artikelList = Collections.emptyList();
-        LOG.info("Liste mit Namen " + listname + " hinzugefügt!");
-        return artikelListRepo.insert(ArtikelList.newArtikelList(listname, artikelList));
+        LOG.info("Liste mit id " + id + " hinzugefügt!");
+        return artikelListRepo.insert(ArtikelList.newArtikelList(id, artikelList));
     }
 
     public void deleteArtikelList(String listName){
@@ -44,10 +45,10 @@ public class ArtikelListService {
         return artikelListRepo.save(artikelList);
     }
 
-    public ArtikelList getArtikelList(String listname){
-        Optional<ArtikelList> optionalArtikelList = artikelListRepo.findArtikelListByListName(listname);
+    public ArtikelList getArtikelList(String id){
+        Optional<ArtikelList> optionalArtikelList = artikelListRepo.findArtikelListById(id);
         if(optionalArtikelList.isEmpty()) {
-            throw new NoSuchElementException("Liste mit Namen " + listname + " nicht gefunden!");
+            throw new NoSuchElementException("Liste mit id " + id + " nicht gefunden!");
         }
         return optionalArtikelList.get();
     }
@@ -62,8 +63,8 @@ public class ArtikelListService {
         artikelListRepo.save(artikelList);
     }
 
-    public void decreaseArtikel(String listName, String artikelName){
-        ArtikelList artikelList = getArtikelList(listName);
+    public void decreaseArtikel(String listId, String artikelName){
+        ArtikelList artikelList = getArtikelList(listId);
         List<Artikel> artList = artikelList.getArtikels()
                 .stream()
                 .map((artikel) -> (artikel.getName().equals(artikelName)) ? artikel.decreaseArtikel():artikel)
@@ -72,8 +73,8 @@ public class ArtikelListService {
         artikelListRepo.save(artikelList);
     }
 
-    public void increaseArtikel(String listName, String artikelName){
-        ArtikelList artikelList = getArtikelList(listName);
+    public void increaseArtikel(String listId, String artikelName){
+        ArtikelList artikelList = getArtikelList(listId);
         List<Artikel> artList = artikelList.getArtikels()
                 .stream()
                 .map((artikel) -> (artikel.getName().equals(artikelName)) ? artikel.increaseArtikel():artikel)

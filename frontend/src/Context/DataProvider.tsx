@@ -1,8 +1,8 @@
-import React, {createContext, useEffect, useState} from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 import {IArtikelList} from "../Model/ArtikelList";
 import {listnames, recipes} from "../Services/apiService";
 import {IRecipe} from "../Model/Recipe";
-
+import {AuthContext} from "./AuthProvider";
 
 export interface IDataContextType {
     allList: IArtikelList[],
@@ -28,21 +28,22 @@ export const DataContext = createContext<IDataContextType>({
 
 export default function DataProvider({children}: { children: React.ReactNode }) {
     const [allList, setAllList] = useState<IArtikelList[]>([])
-
+    const {token} = useContext(AuthContext)
     const [allRecipe, setAllRecipe] = useState<IRecipe[]>([])
 
+    // eslint-disable-next-line
     useEffect(() => {
             refresh()
             refreshRecipes()
         }
-        , [])
+        ,[token])
 
     const refresh = () => {
-        listnames().then(setAllList)
+        listnames(token).then(setAllList)
     }
 
     const refreshRecipes = () => {
-        recipes().then(setAllRecipe)
+        recipes(token).then(setAllRecipe)
     }
 
     return (
