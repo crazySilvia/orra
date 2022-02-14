@@ -21,9 +21,12 @@ export default function AddListField() {
             listName: input
         }
         saveNewList(newListDto, token)
-            .then(() => setAllList([...allList, {listName: input, artikels: []}]))
-            .then(() => {
-                navigate('/' + newListDto.listName)
+            .then((response) => {
+                setAllList([...allList, response])
+                return response
+            })
+            .then((response) => {
+                navigate('/' + response.id)
             })
             .catch((er) => console.error(er))
     }

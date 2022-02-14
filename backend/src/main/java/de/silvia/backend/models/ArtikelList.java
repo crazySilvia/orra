@@ -12,6 +12,7 @@ import java.util.List;
 @Document
 public class ArtikelList {
     @Id
+    private String id;
     @NonNull
     private String listName;
     private List<Artikel> artikels;

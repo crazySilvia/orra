@@ -29,28 +29,28 @@ public class ArtikelListController {
         return aServ.addArtikelList(listDto.getListName());
     }
 
-    @DeleteMapping("/{listName}")
-    public void deleteList(@PathVariable String listName){
-        aServ.deleteArtikelList(listName);
+    @DeleteMapping("/{listId}")
+    public void deleteList(@PathVariable String listId){
+        aServ.deleteArtikelList(listId);
     }
 
-    @PostMapping("/{listName}")
-    public ArtikelList addArticle(@RequestBody ArtikelDto artikelDto, @PathVariable String listName){
-        return aServ.addArtikel(listName, artikelDto);
+    @PostMapping("/{listId}")
+    public ArtikelList addArticle(@RequestBody ArtikelDto artikelDto, @PathVariable String listId){
+        return aServ.addArtikel(listId, artikelDto);
     }
 
-    @DeleteMapping(value = "/{listName}/remove/{artikelName}")
-    public void delArticle(@PathVariable String artikelName, @PathVariable String listName){
-        aServ.deleteArtikel(listName, artikelName);
+    @DeleteMapping(value = "/{listId}/remove/{artikelName}")
+    public void delArticle(@PathVariable String artikelName, @PathVariable String listId){
+        aServ.deleteArtikel(listId, artikelName);
     }
 
-    @PatchMapping("/{listName}/decrease/{artikelName}")
-    public void decreaseArticle(@PathVariable String artikelName, @PathVariable String listName){
-        aServ.decreaseArtikel(listName, artikelName);
+    @PatchMapping("/{listId}/decrease/{artikelName}")
+    public void decreaseArticle(@PathVariable String artikelName, @PathVariable String listId){
+        aServ.decreaseArtikel(listId, artikelName);
     }
 
-    @PatchMapping("/{listName}/increase/{artikelName}")
-    public void increaseArticle(@PathVariable String artikelName, @PathVariable String listName){
-        aServ.increaseArtikel(listName, artikelName);
+    @PatchMapping("/{listId}/increase/{artikelName}")
+    public void increaseArticle(@PathVariable String artikelName, @PathVariable String listId){
+        aServ.increaseArtikel(listId, artikelName);
     }
 }
