@@ -9,6 +9,7 @@ import ListsPage from "./Pages/ListsPage";
 import ListPage from "./Pages/Listpages/ListPage";
 import DataProvider from "./Context/DataProvider";
 import NavBar from "./Components/NavBar";
+import RequireAuth from "./Routing/RequireAuth";
 
 function App() {
 
