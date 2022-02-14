@@ -1,8 +1,7 @@
-import React, {useEffect} from "react";
-import {createContext, useState} from "react";
+import React, {createContext, useEffect, useContext, useState} from "react";
 import {IArtikelList} from "../Model/ArtikelList";
 import {listnames} from "../Services/apiService";
-
+import {AuthContext} from "./AuthProvider";
 
 export interface IDataContextType{
     allList: IArtikelList[],
@@ -18,10 +17,19 @@ export const DataContext = createContext<IDataContextType>({
 
 export default function DataProvider({children} : {children: React.ReactNode}) {
     const [allList, setAllList] = useState<IArtikelList[]>([])
+    const {token} = useContext(AuthContext)
 
-    useEffect(() => {refresh()},[])
 
-    const refresh = () => {listnames().then(setAllList)}
+    useEffect(() => {
+            refresh()
+        }
+        ,[token])
+
+    const refresh = () => {
+        listnames(token).then(setAllList)
+    }
+
+
 
     return (
         <DataContext.Provider value={{allList, setAllList, refresh}}>

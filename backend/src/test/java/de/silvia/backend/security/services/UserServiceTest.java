@@ -23,7 +23,7 @@ class UserServiceTest {
         User mockedUser = User.newUser("Julius", "jjj@ddd.cd", "Schmitz",
                 "userX", "kskskk", List.of(
                         new SimpleGrantedAuthority("API_READWRITE")));
-        when(userRepo.findByUsername("Julius")).thenReturn(java.util.Optional.of(mockedUser));
+        when(userRepo.findUserByUsername("Julius")).thenReturn(mockedUser);
         UserService t  = new UserService(userRepo);
         User actualUser = t.loadUserByUsername("Julius");
         assertEquals(mockedUser, actualUser);
