@@ -29,7 +29,7 @@ public class UserController {
         rServ.registerUser(userDto);
     }
 
-    @GetMapping("me")
+    @GetMapping("loggedin")
     public UserDetails getLoggedInUser(Principal principal) {
         String username = principal.getName();
         return uServ

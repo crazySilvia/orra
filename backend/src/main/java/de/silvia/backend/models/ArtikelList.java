@@ -16,11 +16,13 @@ public class ArtikelList {
     @NonNull
     private String listName;
     private List<Artikel> artikels;
+    private String userId;
 
-    public static ArtikelList newArtikelList(String listName, List<Artikel> artikelList) {
+    public static ArtikelList newArtikelList(String listName, List<Artikel> artikelList, String userId) {
         return ArtikelList.builder()
                 .listName(listName)
                 .artikels(artikelList)
+                .userId(userId)
                 .build();
     }
 

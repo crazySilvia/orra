@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+
 @Service
 public class UserService implements UserDetailsService {
     private static final Log LOG = LogFactory.getLog(UserDetailsService.class);
@@ -27,5 +29,13 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
         return user;
+    }
+
+    public User getUserByPrincipal(Principal principal) throws UsernameNotFoundException{
+        if(principal != null){
+            return loadUserByUsername(principal.getName());
+        }
+        LOG.warn("Principal is null");
+        throw  new UsernameNotFoundException("Principal is null");
     }
 }
