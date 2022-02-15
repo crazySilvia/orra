@@ -1,17 +1,17 @@
 package de.silvia.backend.repositories;
 
 import de.silvia.backend.models.ArtikelList;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface IArtikelListRepo extends MongoRepository<ArtikelList, String> {
 
-    Optional<ArtikelList> findArtikelListById(String id);
+    List<ArtikelList> findAllByUserId(String userId);
 
-    @NotNull List<ArtikelList> findAll();
+    void deleteArtikelListByUserIdAndListName(String userId, String id);
+
+    ArtikelList findArtikelListByUserIdAndId(String userId, String id);
 }
