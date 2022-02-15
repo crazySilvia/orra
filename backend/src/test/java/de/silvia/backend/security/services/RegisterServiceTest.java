@@ -37,4 +37,14 @@ class RegisterServiceTest {
         r.registerUser(mockedUserDto);
         verify(userRepo,times(1)).insert(mockedUser);
     }
+
+    @Test
+    void shouldThrowErrorIfRegisterFails(){
+        User mockedUser = User.newUser("Frauke", "fra@ke.de",
+                "Schmitt", "FrauSchmitt",
+                "fRSm1245", List.of(
+                        new SimpleGrantedAuthority("API_READWRITE")));
+        when(userRepo.insert(mockedUser)).thenReturn(mockedUser);
+        assertEquals(mockedUser, userRepo.insert(mockedUser));
+    }
 }
