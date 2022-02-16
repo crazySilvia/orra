@@ -36,6 +36,6 @@ public class UserService implements UserDetailsService {
             return loadUserByUsername(principal.getName());
         }
         LOG.warn("Principal is null");
-        throw  new UsernameNotFoundException("Principal is null");
+        throw new UsernameNotFoundException("Principal is null");
     }
 }
