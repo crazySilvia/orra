@@ -12,16 +12,16 @@ import java.util.List;
 @Document
 public class ArtikelList {
     @Id
-    private String id;
+    private String listId;
     @NonNull
     private String listName;
     private List<Artikel> artikels;
     private String userId;
 
-    public static ArtikelList newArtikelList(String listName, List<Artikel> artikelList, String userId) {
+    public static ArtikelList newArtikelList(String listName, List<Artikel> artikels, String userId) {
         return ArtikelList.builder()
                 .listName(listName)
-                .artikels(artikelList)
+                .artikels(artikels)
                 .userId(userId)
                 .build();
     }
@@ -29,5 +29,7 @@ public class ArtikelList {
     public void addArticle(Artikel article){
         artikels.add(article);
     }
+
+
 
 }
