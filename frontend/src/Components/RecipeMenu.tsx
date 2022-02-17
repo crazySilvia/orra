@@ -1,13 +1,13 @@
 import "./ListMenu.css"
 import React from 'react';
 import {IRecipe} from "../Model/Recipe";
-import SidebarElement from "./SidebarElement";
+import RecipeMenuElement from "./RecipeMenuElement";
 
-export default function RecipeMenu({lists}:{lists:IRecipe[]}){
-    return(
+export default function RecipeMenu({lists}: { lists: IRecipe[] }) {
+    return (
         <div className="menu">
-            {lists.map((recipe: IRecipe, i)=>
-            <SidebarElement title={recipe.recipeName} key={i}/>)}
+            {lists.map((recipe: IRecipe, i) =>
+                <RecipeMenuElement title={recipe.recipeName} key={i}/>)}
         </div>
     )
 }
