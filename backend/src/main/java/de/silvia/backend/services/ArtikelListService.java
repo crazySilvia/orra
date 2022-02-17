@@ -23,7 +23,7 @@ public class ArtikelListService {
     }
 
     public ArtikelList addArtikelList(String userId, String listName) throws CloneNotSupportedException {
-        if (artikelListRepo.findArtikelListByUserIdAndListName(userId, listName) != null) {
+        if (artikelListRepo.findArtikelListByUserIdAndListId(userId, listName) != null) {
             throw new CloneNotSupportedException("Liste mit Namen " + listName + " gibt es schon!");
         }
         List<Artikel> artikels = Collections.emptyList();
@@ -31,31 +31,31 @@ public class ArtikelListService {
         return artikelListRepo.insert(ArtikelList.newArtikelList(listName, artikels, userId));
     }
 
-    public void deleteArtikelList(String userId, String listName) {
-        artikelListRepo.deleteArtikelListByUserIdAndListName(userId, listName);
+    public void deleteArtikelList(String userId, String listId) {
+        artikelListRepo.deleteArtikelListByUserIdAndListId(userId, listId);
     }
 
     public List<ArtikelList> getAllArtikelLists(String userId) {
         return artikelListRepo.findAllByUserId(userId);
     }
 
-    public ArtikelList addArtikel(String userId, String listname, ArtikelDto artikelDto) {
+    public ArtikelList addArtikel(String userId, String listId, ArtikelDto artikelDto) {
         final Artikel artikel = new Artikel(artikelDto);
-        ArtikelList artikelList = getArtikelList(userId, listname);
+        ArtikelList artikelList = getArtikelList(userId, listId);
         artikelList.addArticle(artikel);
         return artikelListRepo.save(artikelList);
     }
 
-    public ArtikelList getArtikelList(String userId, String listName) {
-        ArtikelList artikelList = artikelListRepo.findArtikelListByUserIdAndListName(userId, listName);
+    public ArtikelList getArtikelList(String userId, String listId) {
+        ArtikelList artikelList = artikelListRepo.findArtikelListByUserIdAndListId(userId, listId);
         if (artikelList == null) {
-            throw new NoSuchElementException("Liste mit Namen " + listName + " nicht gefunden!");
+            throw new NoSuchElementException("Liste mit ListId " + listId + " nicht gefunden!");
         }
         return artikelList;
     }
 
-    public void deleteArtikel(String userId, String listName, String artikelName) {
-        ArtikelList artikelList = getArtikelList(userId, listName);
+    public void deleteArtikel(String userId, String listId, String artikelName) {
+        ArtikelList artikelList = getArtikelList(userId, listId);
         List<Artikel> updateArtikel = artikelList.getArtikels()
                 .stream()
                 .filter((artikel) -> (!artikel.getName().equals(artikelName)))
@@ -64,8 +64,8 @@ public class ArtikelListService {
         artikelListRepo.save(artikelList);
     }
 
-    public void decreaseArtikel(String userId, String listName, String artikelName) {
-        ArtikelList artikelList = getArtikelList(userId, listName);
+    public void decreaseArtikel(String userId, String listId, String artikelName) {
+        ArtikelList artikelList = getArtikelList(userId, listId);
         List<Artikel> artList = artikelList.getArtikels()
                 .stream()
                 .map((artikel) -> (artikel.getName().equals(artikelName)) ? artikel.decreaseArtikel() : artikel)

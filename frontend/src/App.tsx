@@ -27,7 +27,7 @@ function App() {
                             <ListsPage/>
                         </RequireAuth>
                         }/>
-                        <Route path={"/:listid"} element={
+                        <Route path={"/:listId"} element={
                         <RequireAuth>
                             <ListPage/>
                         </RequireAuth>
