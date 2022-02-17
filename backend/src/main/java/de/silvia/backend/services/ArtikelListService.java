@@ -64,8 +64,8 @@ public class ArtikelListService {
         artikelListRepo.save(artikelList);
     }
 
-    public void decreaseArtikel(String userId, String listId, String artikelName) {
-        ArtikelList artikelList = getArtikelList(userId, listId);
+    public void decreaseArtikel(String userId, String listName, String artikelName) {
+        ArtikelList artikelList = getArtikelList(userId, listName);
         List<Artikel> artList = artikelList.getArtikels()
                 .stream()
                 .map((artikel) -> (artikel.getName().equals(artikelName)) ? artikel.decreaseArtikel() : artikel)
