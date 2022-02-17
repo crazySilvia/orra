@@ -11,8 +11,8 @@ import {AuthContext} from "../../Context/AuthProvider";
 
 export default function ListPage() {
     const {allList, refresh} = useContext(DataContext)
-    const {listid} = useParams()
-    const articleList = allList.find((List) => List.id === listid)
+    const {listId} = useParams()
+    const articleList = allList.find((List) => List.listId === listId)
     const navigate = useNavigate()
     const [input, setInput] = useState<string>("")
     const [zahl] = useState<number>(1)
@@ -25,7 +25,7 @@ export default function ListPage() {
             <div>Liste existiert nicht</div>)
     }
     const entfernen = () => {
-        deleteList(articleList.id, token)
+        deleteList(articleList.listId, token)
             .then(() => {
                 refresh()
             })
@@ -36,7 +36,7 @@ export default function ListPage() {
     }
 
     const delArtikel = (artikelToRemove: string) => {
-        deleteArticle(articleList.id, artikelToRemove, token)
+        deleteArticle(articleList.listId, artikelToRemove, token)
             .then(() => {
                 refresh()
             })
@@ -44,7 +44,7 @@ export default function ListPage() {
     }
 
     const increaseArtikel = (artikelToIncrease: string) => {
-        increaseArticle(articleList.id, artikelToIncrease, token)
+        increaseArticle(articleList.listId, artikelToIncrease, token)
             .then(() => {
                 refresh()
             })
@@ -52,7 +52,7 @@ export default function ListPage() {
     }
 
     const decreaseArtikel = (artikelToDecrease: string) => {
-        decreaseArticle(articleList.id, artikelToDecrease, token)
+        decreaseArticle(articleList.listId, artikelToDecrease, token)
             .then(() => {
                 refresh()
             })
@@ -69,7 +69,7 @@ export default function ListPage() {
             name: input,
             anzahl: zahl
         }
-        saveNewArticle(articleList.id, articleDto, token)
+        saveNewArticle(articleList.listId, articleDto, token)
             .then(() => {
                 refresh()
             })

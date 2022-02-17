@@ -26,7 +26,7 @@ export default function AddListField() {
                 return response
             })
             .then((response) => {
-                navigate('/' + response.id)
+                navigate('/' + response.listId)
             })
             .catch((er) => console.error(er))
     }

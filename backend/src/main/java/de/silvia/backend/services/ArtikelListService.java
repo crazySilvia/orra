@@ -22,40 +22,40 @@ public class ArtikelListService {
         this.artikelListRepo = artikelListRepo;
     }
 
-    public ArtikelList addArtikelList(String userId, String id) throws CloneNotSupportedException {
-        if (artikelListRepo.findArtikelListByUserIdAndId(userId, id) != null) {
-            throw new CloneNotSupportedException("Liste mit id " + id + " gibt es schon!");
+    public ArtikelList addArtikelList(String userId, String listName) throws CloneNotSupportedException {
+        if (artikelListRepo.findArtikelListByUserIdAndListId(userId, listName) != null) {
+            throw new CloneNotSupportedException("Liste mit Namen " + listName + " gibt es schon!");
         }
-        List<Artikel> artikelList = Collections.emptyList();
-        LOG.info("Liste mit id " + id + " hinzugefügt!");
-        return artikelListRepo.insert(ArtikelList.newArtikelList(id, artikelList, userId));
+        List<Artikel> artikels = Collections.emptyList();
+        LOG.info("Liste mit Namen " + listName + " hinzugefügt!");
+        return artikelListRepo.insert(ArtikelList.newArtikelList(listName, artikels, userId));
     }
 
-    public void deleteArtikelList(String userId, String listName) {
-        artikelListRepo.deleteArtikelListByUserIdAndListName(userId, listName);
+    public void deleteArtikelList(String userId, String listId) {
+        artikelListRepo.deleteArtikelListByUserIdAndListId(userId, listId);
     }
 
     public List<ArtikelList> getAllArtikelLists(String userId) {
         return artikelListRepo.findAllByUserId(userId);
     }
 
-    public ArtikelList addArtikel(String userId, String listname, ArtikelDto artikelDto) {
+    public ArtikelList addArtikel(String userId, String listId, ArtikelDto artikelDto) {
         final Artikel artikel = new Artikel(artikelDto);
-        ArtikelList artikelList = getArtikelList(userId, listname);
+        ArtikelList artikelList = getArtikelList(userId, listId);
         artikelList.addArticle(artikel);
         return artikelListRepo.save(artikelList);
     }
 
-    public ArtikelList getArtikelList(String userId, String id) {
-        ArtikelList artikelList = artikelListRepo.findArtikelListByUserIdAndId(userId, id);
+    public ArtikelList getArtikelList(String userId, String listId) {
+        ArtikelList artikelList = artikelListRepo.findArtikelListByUserIdAndListId(userId, listId);
         if (artikelList == null) {
-            throw new NoSuchElementException("Liste mit id " + id + " nicht gefunden!");
+            throw new NoSuchElementException("Liste mit ListId " + listId + " nicht gefunden!");
         }
         return artikelList;
     }
 
-    public void deleteArtikel(String userId, String listName, String artikelName) {
-        ArtikelList artikelList = getArtikelList(userId, listName);
+    public void deleteArtikel(String userId, String listId, String artikelName) {
+        ArtikelList artikelList = getArtikelList(userId, listId);
         List<Artikel> updateArtikel = artikelList.getArtikels()
                 .stream()
                 .filter((artikel) -> (!artikel.getName().equals(artikelName)))

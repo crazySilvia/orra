@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 @Service
@@ -33,6 +34,7 @@ public class RegisterService {
             userRepo.insert(user);
         } catch (Exception e) {
             LOG.info("User " + user.getUsername() + " already exists.");
+            throw new RuntimeException("User " + user.getUsername() + " already exists.", e);
         }
     }
 }

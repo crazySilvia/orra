@@ -11,7 +11,9 @@ public interface IArtikelListRepo extends MongoRepository<ArtikelList, String> {
 
     List<ArtikelList> findAllByUserId(String userId);
 
-    void deleteArtikelListByUserIdAndListName(String userId, String id);
+    void deleteArtikelListByUserIdAndListId(String userId, String listId);
 
-    ArtikelList findArtikelListByUserIdAndId(String userId, String id);
+    ArtikelList findArtikelListByUserIdAndListId(String userId, String listId);
+
+
 }
