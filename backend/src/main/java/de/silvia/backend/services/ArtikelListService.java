@@ -8,7 +8,9 @@ import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ArtikelListService {
@@ -20,40 +22,40 @@ public class ArtikelListService {
         this.artikelListRepo = artikelListRepo;
     }
 
-    public ArtikelList addArtikelList(String listname) throws CloneNotSupportedException {
-        if(artikelListRepo.findArtikelListByListName(listname).isPresent()){
-            throw new CloneNotSupportedException("Liste mit Namen " + listname + " gibt es schon!");
+    public ArtikelList addArtikelList(String userId, String listName) throws CloneNotSupportedException {
+        if (artikelListRepo.findArtikelListByUserIdAndListId(userId, listName) != null) {
+            throw new CloneNotSupportedException("Liste mit Namen " + listName + " gibt es schon!");
         }
-        List<Artikel> artikelList = Collections.emptyList();
-        LOG.info("Liste mit Namen " + listname + " hinzugefügt!");
-        return artikelListRepo.insert(ArtikelList.newArtikelList(listname, artikelList));
+        List<Artikel> artikels = Collections.emptyList();
+        LOG.info("Liste mit Namen " + listName + " hinzugefügt!");
+        return artikelListRepo.insert(ArtikelList.newArtikelList(listName, artikels, userId));
     }
 
-    public void deleteArtikelList(String listName){
-        artikelListRepo.deleteById(listName);
+    public void deleteArtikelList(String userId, String listId) {
+        artikelListRepo.deleteArtikelListByUserIdAndListId(userId, listId);
     }
 
-    public List<ArtikelList> getAllArtikelLists() {
-        return artikelListRepo.findAll();
+    public List<ArtikelList> getAllArtikelLists(String userId) {
+        return artikelListRepo.findAllByUserId(userId);
     }
 
-    public ArtikelList addArtikel(String listname, ArtikelDto artikelDto) {
+    public ArtikelList addArtikel(String userId, String listId, ArtikelDto artikelDto) {
         final Artikel artikel = new Artikel(artikelDto);
-        ArtikelList artikelList = getArtikelList(listname);
+        ArtikelList artikelList = getArtikelList(userId, listId);
         artikelList.addArticle(artikel);
         return artikelListRepo.save(artikelList);
     }
 
-    public ArtikelList getArtikelList(String listname){
-        Optional<ArtikelList> optionalArtikelList = artikelListRepo.findArtikelListByListName(listname);
-        if(optionalArtikelList.isEmpty()) {
-            throw new NoSuchElementException("Liste mit Namen " + listname + " nicht gefunden!");
+    public ArtikelList getArtikelList(String userId, String listId) {
+        ArtikelList artikelList = artikelListRepo.findArtikelListByUserIdAndListId(userId, listId);
+        if (artikelList == null) {
+            throw new NoSuchElementException("Liste mit ListId " + listId + " nicht gefunden!");
         }
-        return optionalArtikelList.get();
+        return artikelList;
     }
 
-    public void deleteArtikel(String listName, String artikelName){
-        ArtikelList artikelList = getArtikelList(listName);
+    public void deleteArtikel(String userId, String listId, String artikelName) {
+        ArtikelList artikelList = getArtikelList(userId, listId);
         List<Artikel> updateArtikel = artikelList.getArtikels()
                 .stream()
                 .filter((artikel) -> (!artikel.getName().equals(artikelName)))
@@ -62,21 +64,21 @@ public class ArtikelListService {
         artikelListRepo.save(artikelList);
     }
 
-    public void decreaseArtikel(String listName, String artikelName){
-        ArtikelList artikelList = getArtikelList(listName);
+    public void decreaseArtikel(String userId, String listId, String artikelName) {
+        ArtikelList artikelList = getArtikelList(userId, listId);
         List<Artikel> artList = artikelList.getArtikels()
                 .stream()
-                .map((artikel) -> (artikel.getName().equals(artikelName)) ? artikel.decreaseArtikel():artikel)
+                .map((artikel) -> (artikel.getName().equals(artikelName)) ? artikel.decreaseArtikel() : artikel)
                 .toList();
         artikelList.setArtikels(artList);
         artikelListRepo.save(artikelList);
     }
 
-    public void increaseArtikel(String listName, String artikelName){
-        ArtikelList artikelList = getArtikelList(listName);
+    public void increaseArtikel(String userId, String listId, String artikelName) {
+        ArtikelList artikelList = getArtikelList(userId, listId);
         List<Artikel> artList = artikelList.getArtikels()
                 .stream()
-                .map((artikel) -> (artikel.getName().equals(artikelName)) ? artikel.increaseArtikel():artikel)
+                .map((artikel) -> (artikel.getName().equals(artikelName)) ? artikel.increaseArtikel() : artikel)
                 .toList();
         artikelList.setArtikels(artList);
         artikelListRepo.save(artikelList);

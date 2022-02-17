@@ -11,12 +11,13 @@ import {AuthContext} from "../../Context/AuthProvider";
 
 export default function ListPage() {
     const {allList, refresh} = useContext(DataContext)
-    const {listname} = useParams()
-    const articleList = allList.find((List) => List.listName === listname)
+    const {listId} = useParams()
+    const articleList = allList.find((List) => List.listId === listId)
     const navigate = useNavigate()
     const [input, setInput] = useState<string>("")
     const [zahl] = useState<number>(1)
     const {token} = useContext(AuthContext)
+
 
     if (!articleList) {
         navigate('/')
@@ -24,7 +25,7 @@ export default function ListPage() {
             <div>Liste existiert nicht</div>)
     }
     const entfernen = () => {
-        deleteList(articleList.listName)
+        deleteList(articleList.listId, token)
             .then(() => {
                 refresh()
             })
@@ -35,7 +36,7 @@ export default function ListPage() {
     }
 
     const delArtikel = (artikelToRemove: string) => {
-        deleteArticle(articleList.listName, artikelToRemove)
+        deleteArticle(articleList.listId, artikelToRemove, token)
             .then(() => {
                 refresh()
             })
@@ -43,7 +44,7 @@ export default function ListPage() {
     }
 
     const increaseArtikel = (artikelToIncrease: string) => {
-        increaseArticle(articleList.listName, artikelToIncrease)
+        increaseArticle(articleList.listId, artikelToIncrease, token)
             .then(() => {
                 refresh()
             })
@@ -51,7 +52,7 @@ export default function ListPage() {
     }
 
     const decreaseArtikel = (artikelToDecrease: string) => {
-        decreaseArticle(articleList.listName, artikelToDecrease)
+        decreaseArticle(articleList.listId, artikelToDecrease, token)
             .then(() => {
                 refresh()
             })
@@ -68,7 +69,7 @@ export default function ListPage() {
             name: input,
             anzahl: zahl
         }
-        saveNewArticle(articleList.listName, articleDto, token)
+        saveNewArticle(articleList.listId, articleDto, token)
             .then(() => {
                 refresh()
             })

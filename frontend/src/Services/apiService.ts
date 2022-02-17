@@ -3,7 +3,6 @@ import {NewUserDto} from "../Api/NewUserDto";
 import {NewListDto} from "../Api/NewListDto";
 import {ArticleDto} from "../Api/ArticleDto";
 
-
 /**
  * Hier werden die Rezepte des User abgerufen
  * @param token usertoken
@@ -12,52 +11,47 @@ export const recipes = (token?: string) =>
     axios.get("/api/recipes", token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
 
-
-
-export const saveNewArticle = (listName: string, articleDto: ArticleDto, token?: string) =>
-    axios.post(`/api/lists/${listName}`, articleDto, token ? {headers: {"Authorization": "Bearer " + token}} : {})
+export const saveNewArticle = (listId: string, articleDto: ArticleDto, token?: string) =>
+    axios.post(`/api/lists/${listId}`, articleDto, token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
 
 /**
  * Hier passiert das Erhöhen der Artikelanzahl
- * @param listName Name der jeweiligen Liste
+ * @param listId Name der jeweiligen Liste
  * @param artikelName Name des betreffenden Artikel
  * @param token usertoken
  */
-export const decreaseArticle = (listName: string, artikelName: string, token?: string) =>
-    axios.patch(`/api/lists/${listName}/decrease/${artikelName}`,
-        token ? {headers: {"Authorization": "Bearer " + token}} : {})
+export const decreaseArticle = (listId: string, artikelName: string, token?: string) =>
+    axios.patch(`/api/lists/${listId}/decrease/${artikelName}`, artikelName, token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
 
 /**
  * Hier passiert das Senken der Artikelanzahl
- * @param listName Name der jeweiligen Liste
+ * @param listId Name der jeweiligen Liste
  * @param artikelName Name des betreffenden Artikel
  * @param token usertoken
  */
-export const increaseArticle = (listName: string, artikelName: string, token?: string) =>
-    axios.patch(`/api/lists/${listName}/increase/${artikelName}`,
-        token ? {headers: {"Authorization": "Bearer " + token}} : {})
+export const increaseArticle = (listId: string, artikelName: string, token?: string) =>
+    axios.patch(`/api/lists/${listId}/increase/${artikelName}`, artikelName, token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
 
 /**
  * Hier passiert das Löschen der Artikel
- * @param listName Name der jeweiligen Liste
+ * @param listId Name der jeweiligen Liste
  * @param artikelName Name des zu löschenden Artikel
  * @param token usertoken
  */
-export const deleteArticle = (listName: string, artikelName: string, token?: string) =>
-    axios.delete(`/api/lists/${listName}/remove/${artikelName}`,
-        token ? {headers: {"Authorization": "Bearer " + token}} : {})
+export const deleteArticle = (listId: string, artikelName: string, token?: string) =>
+    axios.delete(`/api/lists/${listId}/remove/${artikelName}`,token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
 
 /**
  * Hier passiert das Löschen der Liste
- * @param listName Name der jeweiligen Liste
+ * @param listId Name der jeweiligen Liste
  * @param token usertoken
  */
-export const deleteList = (listName: string, token?: string) =>
-    axios.delete(`/api/lists/${listName}`, token ? {headers: {"Authorization": "Bearer " + token}} : {})
+export const deleteList = (listId: string, token?: string) =>
+    axios.delete(`/api/lists/${listId}`, token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
 
 /**

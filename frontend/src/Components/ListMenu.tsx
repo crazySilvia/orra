@@ -8,7 +8,7 @@ export default function ListMenu({lists}:{lists:IArtikelList[]}){
     return(
         <div className="menu">
             {lists.map((artikelList, i)=>
-                <SidebarElement title={artikelList.listName} key={i}/>)}
+                <SidebarElement title={artikelList.listName} id={artikelList.listId} key={i}/>)}
         </div>
     )
 }

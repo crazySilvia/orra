@@ -3,54 +3,82 @@ package de.silvia.backend.controller;
 import de.silvia.backend.api.ArtikelDto;
 import de.silvia.backend.api.ListDto;
 import de.silvia.backend.models.ArtikelList;
+import de.silvia.backend.security.models.User;
+import de.silvia.backend.security.services.UserService;
 import de.silvia.backend.services.ArtikelListService;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.security.Principal;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/lists")
 public class ArtikelListController {
 
+    private static final Log LOG = LogFactory.getLog(ArtikelListController.class);
     private final ArtikelListService aServ;
+    private final UserService userService;
 
     @Autowired
-    public ArtikelListController(ArtikelListService aServ) {
+    public ArtikelListController(ArtikelListService aServ, UserService userService) {
         this.aServ = aServ;
+        this.userService = userService;
+    }
+
+    private User getUser(Principal principal) throws ResponseStatusException {
+        try {
+            return userService.getUserByPrincipal(principal);
+        }catch (UsernameNotFoundException e){
+            LOG.warn("No User found");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No User found");
+        }
     }
 
     @GetMapping
-    public List<ArtikelList> getAll() {
-        return aServ.getAllArtikelLists();
+    public List<ArtikelList> getAll(Principal principal) {
+        User user = getUser(principal);
+        return aServ.getAllArtikelLists(user.getUsername());
     }
 
     @PostMapping
-    public ArtikelList addArtikelList(@RequestBody ListDto listDto) throws CloneNotSupportedException {
-        return aServ.addArtikelList(listDto.getListName());
+    public ArtikelList addArtikelList(Principal principal, @RequestBody ListDto listDto) throws CloneNotSupportedException {
+        User user = getUser(principal);
+        return aServ.addArtikelList(user.getUsername(), listDto.getListName());
     }
 
-    @DeleteMapping("/{listName}")
-    public void deleteList(@PathVariable String listName){
-        aServ.deleteArtikelList(listName);
+    @DeleteMapping("/{listId}")
+    public void deleteList(Principal principal, @PathVariable String listId){
+        User user = getUser(principal);
+        aServ.deleteArtikelList(user.getUsername(), listId);
     }
 
-    @PostMapping("/{listName}")
-    public ArtikelList addArticle(@RequestBody ArtikelDto artikelDto, @PathVariable String listName){
-        return aServ.addArtikel(listName, artikelDto);
+    @PostMapping("/{listId}")
+    public ArtikelList addArticle(Principal principal, @RequestBody ArtikelDto artikelDto, @PathVariable String listId){
+        User user = getUser(principal);
+        return aServ.addArtikel(user.getUsername(), listId, artikelDto);
     }
 
-    @DeleteMapping(value = "/{listName}/remove/{artikelName}")
-    public void delArticle(@PathVariable String artikelName, @PathVariable String listName){
-        aServ.deleteArtikel(listName, artikelName);
+    @DeleteMapping(value = "/{listId}/remove/{artikelName}")
+    public void delArticle(Principal principal, @PathVariable String artikelName, @PathVariable String listId){
+        User user = getUser(principal);
+        aServ.deleteArtikel(user.getUsername(), listId, artikelName);
     }
 
-    @PatchMapping("/{listName}/decrease/{artikelName}")
-    public void decreaseArticle(@PathVariable String artikelName, @PathVariable String listName){
-        aServ.decreaseArtikel(listName, artikelName);
+    @PatchMapping("/{listId}/decrease/{artikelName}")
+    public void decreaseArticle(Principal principal, @PathVariable String artikelName, @PathVariable String listId){
+        User user = getUser(principal);
+        aServ.decreaseArtikel(user.getUsername(), listId, artikelName);
     }
 
-    @PatchMapping("/{listName}/increase/{artikelName}")
-    public void increaseArticle(@PathVariable String artikelName, @PathVariable String listName){
-        aServ.increaseArtikel(listName, artikelName);
+    @PatchMapping("/{listId}/increase/{artikelName}")
+    public void increaseArticle(Principal principal, @PathVariable String artikelName, @PathVariable String listId){
+        User user = getUser(principal);
+        aServ.increaseArtikel(user.getUsername(), listId, artikelName);
     }
 }
