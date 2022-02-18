@@ -11,6 +11,7 @@ import DataProvider from "./Context/DataProvider";
 import NavBar from "./Components/NavBar";
 import RequireAuth from "./Routing/RequireAuth";
 import RecipesPage from "./Pages/RecipesPage";
+import AddRecipePage from "./Pages/AddRecipePage";
 
 function App() {
 
@@ -36,6 +37,11 @@ function App() {
                         <Route path={"/rezepte"} element={
                             <RequireAuth>
                                 <RecipesPage/>
+                            </RequireAuth>
+                        }/>
+                        <Route path={"/rezepte/erstellen"} element={
+                            <RequireAuth>
+                                <AddRecipePage/>
                             </RequireAuth>
                         }/>
                     </ Routes>

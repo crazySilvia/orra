@@ -1,7 +1,7 @@
-import {IIngredient} from "./Ingredient";
+import {IIngredientList} from "./IngredientList";
 
-export interface IRecipe{
+export interface IRecipe {
     recipeName: string
-    ingredientList: IIngredient[]
+    ingredientList: IIngredientList
     recipeInstructions: string
 }

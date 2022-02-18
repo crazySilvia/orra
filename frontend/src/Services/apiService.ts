@@ -4,6 +4,16 @@ import {NewListDto} from "../Api/NewListDto";
 import {ArticleDto} from "../Api/ArticleDto";
 
 /**
+ * Hier passiert das Löschen der Zutaten
+ * @param ingredientListId Name der jeweiligen Liste
+ * @param ingredientName Name des zu löschenden Artikel
+ * @param token usertoken
+ */
+export const deleteIngredient = (ingredientListId: string, ingredientName: string, token?: string) =>
+    axios.delete(`/api/recipes/${ingredientListId}/remove/${ingredientName}`,token ? {headers: {"Authorization": "Bearer " + token}} : {})
+        .then(response => response.data)
+
+/**
  * Hier werden die Rezepte des User abgerufen
  * @param token usertoken
  */
