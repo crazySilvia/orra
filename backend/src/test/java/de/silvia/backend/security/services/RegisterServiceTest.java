@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -24,7 +23,6 @@ class RegisterServiceTest {
 
     @Test
     public void registerUser() {
-        assertNotNull(userRepo);
         UserDto mockedUserDto = new UserDto("Julius", "Schmidt", "schmitti",
                 "123456", "schmitt@uli.de");
         String encodedPw = encoder.encode(mockedUserDto.getPassword());
