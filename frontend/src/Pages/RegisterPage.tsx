@@ -1,6 +1,5 @@
-import React, {ChangeEvent, FormEvent, useContext, useState} from "react";
+import React, {ChangeEvent, FormEvent, useState} from "react";
 import Header from "../Components/Header";
-import {AuthContext} from "../Context/AuthProvider";
 import {useNavigate} from "react-router-dom";
 import {register} from "../Services/apiService";
 import {NewUserDto} from "../Api/NewUserDto";
@@ -14,7 +13,6 @@ export default function RegisterPage() {
     const [email, setEmail] = useState<string>()
 
     const navigate = useNavigate()
-    const {setJwt} = useContext(AuthContext)
 
     const onFirstNameChange = (event: ChangeEvent<HTMLInputElement>) => {
         setFirstName(event.target.value)

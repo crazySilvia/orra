@@ -31,8 +31,8 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public User getUserByPrincipal(Principal principal) throws UsernameNotFoundException{
-        if(principal != null){
+    public User getUserByPrincipal(Principal principal) throws UsernameNotFoundException {
+        if (principal != null) {
             return loadUserByUsername(principal.getName());
         }
         LOG.warn("Principal is null");

@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useContext, useState} from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 import {IArtikelList} from "../Model/ArtikelList";
 import {listnames, recipes} from "../Services/apiService";
 import {IRecipe} from "../Model/Recipe";
@@ -14,12 +14,15 @@ export interface IDataContextType {
 }
 
 export const DataContext = createContext<IDataContextType>({
-    setAllList: () => {},
+    setAllList: () => {
+    },
     allList: [],
+
     setAllRecipe: () => {},
     allRecipe: [],
     refresh: () => {},
     refreshRecipes: () => {}
+
 })
 
 export default function DataProvider({children}: { children: React.ReactNode }) {
@@ -31,6 +34,7 @@ export default function DataProvider({children}: { children: React.ReactNode }) 
             refresh()
             refreshRecipes()
         }
+        //eslint-disable-next-line
         , [token])
 
     const refresh = () => {
