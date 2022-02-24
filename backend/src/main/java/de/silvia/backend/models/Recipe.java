@@ -21,12 +21,14 @@ public class Recipe {
     private String recipeName;
     private List<Ingredient> ingredientList;
     private String recipeText;
+    private String userId;
 
-    public Recipe(RecipeDto recipeDto){
+    public Recipe(String userId, RecipeDto recipeDto){
         super();
         this.recipeName = recipeDto.getRecipeName();
         this.ingredientList = recipeDto.getIngredientList();
         this.recipeText = recipeDto.getRecipeText();
+        this.userId = userId;
     }
 
     public void addIngredient(Ingredient ingredient){

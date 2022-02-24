@@ -1,35 +1,63 @@
 package de.silvia.backend.services;
 
+import de.silvia.backend.api.IngredientDto;
 import de.silvia.backend.api.RecipeDto;
+import de.silvia.backend.models.Ingredient;
 import de.silvia.backend.models.Recipe;
 import de.silvia.backend.repositories.IRecipeRepo;
-import org.apache.juli.logging.Log;
-import org.apache.juli.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class RecipeService {
 
     private final IRecipeRepo recipeRepo;
-    private static final Log LOG = LogFactory.getLog(ArtikelListService.class);
 
     public RecipeService(IRecipeRepo recipeRepo) {
         this.recipeRepo = recipeRepo;
     }
 
-    public Recipe addRecipe(RecipeDto recipeDto) throws CloneNotSupportedException {
-        if(recipeRepo.findRecipeByRecipeName(recipeDto.getRecipeName()).isPresent()){
+    public Recipe addRecipe(String userId, RecipeDto recipeDto) throws CloneNotSupportedException {
+        if (recipeRepo.findRecipeByUserIdAndRecipeName(userId, recipeDto.getRecipeName()) != null) {
             throw new CloneNotSupportedException("Rezept " + recipeDto.getRecipeName() + " gibt es schon!");
         }
-        final Recipe recipe = new Recipe(recipeDto);
-        LOG.info("Rezept " + recipeDto.getRecipeName() + " hinzugefügt!");
-        recipeRepo.insert(recipe);
+        final Recipe recipe = new Recipe(userId, recipeDto);
+        return recipeRepo.insert(recipe);
+    }
+
+    public void deleteRecipe(String userId, String recipeName){
+        recipeRepo.deleteRecipeByUserIdAndRecipeName(userId, recipeName);
+    }
+
+    public List<Recipe> getAllRecipes(String userId) {
+        return recipeRepo.findAllByUserId(userId);
+    }
+
+    public Recipe getRecipe(String userId, String recipeName){
+        Recipe recipe = recipeRepo.findRecipeByUserIdAndRecipeName(userId, recipeName);
+        if(recipe == null){
+            throw new NoSuchElementException("Rezept: " + recipeName + " nicht gefunden!");
+        }
         return recipe;
     }
 
-    public List<Recipe> getAllRecipes() {
-        return recipeRepo.findAll();
+    public Recipe addIngredient(String userId, String recipeName, IngredientDto ingredientDto){
+        final Ingredient ingredient = new Ingredient(ingredientDto);
+        Recipe recipe = getRecipe(userId, recipeName);
+        recipe.addIngredient(ingredient);
+        return recipeRepo.save(recipe);
     }
+
+    public void deleteIngredient(String userId, String recipeName, String ingredientName){
+        Recipe recipe = getRecipe(userId, recipeName);
+        List<Ingredient> updateIngredients = recipe.getIngredientList()
+                .stream()
+                .filter((ingredient -> (!ingredient.getIngredientName().equals(ingredientName))))
+                .toList();
+        recipe.setIngredientList(updateIngredients);
+
+    }
+
 }

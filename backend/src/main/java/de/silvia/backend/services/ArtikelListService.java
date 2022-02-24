@@ -4,8 +4,6 @@ import de.silvia.backend.api.ArtikelDto;
 import de.silvia.backend.models.Artikel;
 import de.silvia.backend.models.ArtikelList;
 import de.silvia.backend.repositories.IArtikelListRepo;
-import org.apache.juli.logging.Log;
-import org.apache.juli.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -16,7 +14,6 @@ import java.util.NoSuchElementException;
 public class ArtikelListService {
 
     private final IArtikelListRepo artikelListRepo;
-    private static final Log LOG = LogFactory.getLog(ArtikelListService.class);
 
     public ArtikelListService(IArtikelListRepo artikelListRepo) {
         this.artikelListRepo = artikelListRepo;
@@ -27,7 +24,6 @@ public class ArtikelListService {
             throw new CloneNotSupportedException("Liste mit Namen " + listName + " gibt es schon!");
         }
         List<Artikel> artikels = Collections.emptyList();
-        LOG.info("Liste mit Namen " + listName + " hinzugefügt!");
         return artikelListRepo.insert(ArtikelList.newArtikelList(listName, artikels, userId));
     }
 
