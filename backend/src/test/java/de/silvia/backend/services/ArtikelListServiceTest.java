@@ -77,12 +77,9 @@ class ArtikelListServiceTest {
         String userId = "userId";
         String listId = "listId";
         ArtikelDto testArtikelDto = new ArtikelDto("artikelName", 7);
-        Artikel testArtikel = new Artikel(testArtikelDto);
         ArtikelList testArtikelList = ArtikelList.newArtikelList(listId, artikels, userId);
-        testArtikelList.addArticle(testArtikel);
+
         when(artikelListRepo.findArtikelListByUserIdAndListId(userId, listId))
-                .thenReturn(testArtikelList);
-        when(artikelListRepo.save(testArtikelList))
                 .thenReturn(testArtikelList);
 
         artikelListService.addArtikel(userId, listId, testArtikelDto);

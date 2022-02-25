@@ -2,6 +2,7 @@ package de.silvia.backend.models;
 
 import de.silvia.backend.api.RecipeDto;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Document
 public class Recipe {
 

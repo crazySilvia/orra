@@ -57,7 +57,7 @@ public class RecipeService {
                 .filter((ingredient -> (!ingredient.getIngredientName().equals(ingredientName))))
                 .toList();
         recipe.setIngredientList(updateIngredients);
-
+        recipeRepo.save(recipe);
     }
 
 }

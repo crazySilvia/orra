@@ -11,7 +11,7 @@ class ArtikelListTest {
 
     @Test
     void addArticle() {
-        List<Artikel> testArtikels = Collections.emptyList();
+        List<Artikel> testArtikels =  new java.util.ArrayList<>(Collections.emptyList());
         ArtikelList testArtikelList = ArtikelList.builder().listName("Testlist").listId("123").userId("userid").artikels(testArtikels).build();
         Artikel testArtikel = Artikel.builder().name("TestArtikel").anzahl(7).build();
         testArtikelList.addArticle(testArtikel);

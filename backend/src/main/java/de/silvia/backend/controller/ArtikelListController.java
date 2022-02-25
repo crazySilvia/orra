@@ -6,8 +6,6 @@ import de.silvia.backend.models.ArtikelList;
 import de.silvia.backend.security.models.User;
 import de.silvia.backend.security.services.UserService;
 import de.silvia.backend.services.ArtikelListService;
-import org.apache.juli.logging.Log;
-import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +19,6 @@ import java.util.List;
 @RequestMapping("api/lists")
 public class ArtikelListController {
 
-    private static final Log LOG = LogFactory.getLog(ArtikelListController.class);
     private final ArtikelListService aServ;
     private final UserService userService;
 
@@ -34,8 +31,7 @@ public class ArtikelListController {
     private User getUser(Principal principal) throws ResponseStatusException {
         try {
             return userService.getUserByPrincipal(principal);
-        }catch (UsernameNotFoundException e){
-            LOG.warn("No User found");
+        } catch (UsernameNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No User found");
         }
     }
@@ -53,31 +49,31 @@ public class ArtikelListController {
     }
 
     @DeleteMapping("/{listId}")
-    public void deleteList(Principal principal, @PathVariable String listId){
+    public void deleteList(Principal principal, @PathVariable String listId) {
         User user = getUser(principal);
         aServ.deleteArtikelList(user.getUsername(), listId);
     }
 
     @PostMapping("/{listId}")
-    public ArtikelList addArticle(Principal principal, @RequestBody ArtikelDto artikelDto, @PathVariable String listId){
+    public ArtikelList addArticle(Principal principal, @RequestBody ArtikelDto artikelDto, @PathVariable String listId) {
         User user = getUser(principal);
         return aServ.addArtikel(user.getUsername(), listId, artikelDto);
     }
 
     @DeleteMapping(value = "/{listId}/remove/{artikelName}")
-    public void delArticle(Principal principal, @PathVariable String artikelName, @PathVariable String listId){
+    public void delArticle(Principal principal, @PathVariable String artikelName, @PathVariable String listId) {
         User user = getUser(principal);
         aServ.deleteArtikel(user.getUsername(), listId, artikelName);
     }
 
     @PatchMapping("/{listId}/decrease/{artikelName}")
-    public void decreaseArticle(Principal principal, @PathVariable String artikelName, @PathVariable String listId){
+    public void decreaseArticle(Principal principal, @PathVariable String artikelName, @PathVariable String listId) {
         User user = getUser(principal);
         aServ.decreaseArtikel(user.getUsername(), listId, artikelName);
     }
 
     @PatchMapping("/{listId}/increase/{artikelName}")
-    public void increaseArticle(Principal principal, @PathVariable String artikelName, @PathVariable String listId){
+    public void increaseArticle(Principal principal, @PathVariable String artikelName, @PathVariable String listId) {
         User user = getUser(principal);
         aServ.increaseArtikel(user.getUsername(), listId, artikelName);
     }
