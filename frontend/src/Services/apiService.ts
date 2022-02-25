@@ -2,6 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import {NewUserDto} from "../Api/NewUserDto";
 import {NewListDto} from "../Api/NewListDto";
 import {ArticleDto} from "../Api/ArticleDto";
+import {IngredientDto} from "../Api/IngredientDto";
 
 /**
  * Hier passiert das Löschen der Zutaten
@@ -14,6 +15,17 @@ export const deleteIngredient = (ingredientListId: string, ingredientName: strin
         .then(response => response.data)
 
 /**
+ * Hier wird die Zutat hinzugefügt
+ * @param recipeName Rezept, wo die Zutat hingehört
+ * @param ingredientDto Zutat
+ * @param token? Usertoken
+ */
+export const saveNewIngredient = (recipeName: string, ingredientDto: IngredientDto, token?: string | undefined) =>
+    axios.post(`/api/recipes/${recipeName}`, ingredientDto, token ? {headers: {"Authorization": "Bearer " + token}} : {})
+        .then(response => response.data)
+
+
+/**
  * Hier werden die Rezepte des User abgerufen
  * @param token usertoken
  */
@@ -21,6 +33,12 @@ export const recipes = (token?: string) =>
     axios.get("/api/recipes", token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
 
+/**
+ * Hier werden Artikel hinzugefügt
+ * @param listId Name der jeweiligen Liste
+ * @param articleDto DatenTransferObjekt
+ * @param token usertoken
+ */
 export const saveNewArticle = (listId: string, articleDto: ArticleDto, token?: string) =>
     axios.post(`/api/lists/${listId}`, articleDto, token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)

@@ -25,14 +25,14 @@ function App() {
                         <Route path={"/login"} element={<LoginPage/>}/>
                         <Route path={"/register"} element={<RegisterPage/>}/>
                         <Route path={"/vorrat"} element={
-                        <RequireAuth>
-                            <ListsPage/>
-                        </RequireAuth>
+                            <RequireAuth>
+                                <ListsPage/>
+                            </RequireAuth>
                         }/>
                         <Route path={"/:listId"} element={
-                        <RequireAuth>
-                            <ListPage/>
-                        </RequireAuth>
+                            <RequireAuth>
+                                <ListPage/>
+                            </RequireAuth>
                         }/>
                         <Route path={"/rezepte"} element={
                             <RequireAuth>
@@ -50,4 +50,5 @@ function App() {
         </ BrowserRouter>
     );
 }
+
 export default App;

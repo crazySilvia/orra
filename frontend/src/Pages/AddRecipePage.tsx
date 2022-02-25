@@ -1,41 +1,57 @@
-import React, {ChangeEvent, useContext, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useContext, useState} from 'react';
 import {AuthContext} from "../Context/AuthProvider";
 import {useNavigate} from "react-router-dom";
 import Header from "../Components/Header";
 import {IIngredient} from "../Model/Ingredient";
 import IngredientComponent from "../Components/IngredientComponent";
 import {DataContext} from "../Context/DataProvider";
-import {deleteArticle} from "../Services/apiService";
+import RecipeSidebar from "../Components/RecipeSidebar";
+import {IngredientDto} from "../Api/IngredientDto";
+import {saveNewIngredient} from "../Services/apiService";
 
 export default function AddRecipePage() {
 
     const {allRecipe, refresh} = useContext(DataContext)
     const [recipeName, setRecipeName] = useState<string>()
-    const [ingredientList, setIngredientList] = useState<string[]>()
+    const [ingredientName, setIngredientName] = useState<string>()
+    const [amount, setAmount] = useState<string>()
     const [recipeInstruction, setRecipeInstruction] = useState<string>()
-    const recipe
+
 
     const {token} = useContext(AuthContext)
     const navigate = useNavigate()
 
-    if(!recipe) {
-        navigate('/rezepte')
-        return(
-            <div>Rezept existiert nicht</div>
-        )
+
+
+
+    const onRecipeNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setRecipeName(event.target.value)
     }
 
-    const delIngredient = (ingredientToRemove: string) => {
-        deleteIngredient(ingredientList.ingredientListId, ingredientToRemove, token)
+    const handleChangeName = (event: ChangeEvent<HTMLInputElement>) => {
+        setIngredientName(event.target.value)
+    }
+
+    const handleChangeAmount = (event: ChangeEvent<HTMLInputElement>) => {
+        setAmount(event.target.value)
+    }
+
+    //handleSubmitIngredient
+
+
+    const handleSubmitIngredient = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const ingredientDto: IngredientDto = {
+            ingredientName: ingredientName,
+            ingredientAmount: amount
+        }
+        saveNewIngredient(recipeName, ingredientDto, token)
             .then(() => {
                 refresh()
             })
             .catch((er: any) => console.error(er))
     }
 
-    const onRecipeNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setRecipeName(event.target.value)
-    }
 
     /*const onIngredientListChange = (event: ChangeEvent<HTMLInputElement>) => {
         setIngredientList()
@@ -68,18 +84,24 @@ export default function AddRecipePage() {
 
     return (
         <body>
-        <Header title={"Rezepte"}/>
-        <form>
-            <div>
+        <Header title={"Rezept hinzufügen"}/>
+        <RecipeSidebar lists={allRecipe}/>
+        <form onSubmit={handleSubmit}>
                 <input type="text" placeholder="Rezeptname" onChange={onRecipeNameChange} value={recipeName}/>
-                {ingredientList ?
-                ingredientList.ingredient.map((Ingredient: IIngredient, i:number) =>
-                <IngredientComponent ingredient={Ingredient} key={i}
-                                     removeIngredient={ingredientToRemove => delIngredient(ingredientToRemove)}/>)
-                : "Keine Zutaten vorhanden."}
-                <input type="[]" placeholder="Zutaten hier rein schreiben" value={ingredientList}/>
-                <textarea placeholder="Rezeptanleitung hier rein schreiben." value={recipeInstruction}/>
-            </div>
+
+            <form onSubmit={handleSubmitIngredient}>
+                <div className="addIngredient_input">
+                    <input type="text" placeholder="Zutat" onChange={handleChangeName} value={ingredientName}/>
+                    <input type="text" placeholder="Menge" onChange={handleChangeAmount} value={amount}/>
+                </div>
+                <div className="addIngredient_button">
+                    <button type={"submit"}>Zutat hinzufügen</button>
+                </div>
+            </form>
+
+                <textarea placeholder="Rezeptanleitung hier rein schreiben."
+                          onChange={handleChangeInstruction} value={recipeInstruction}/>
+
             <div>
                 <button type={"submit"}>Rezept hinzufügen</button>
             </div>
