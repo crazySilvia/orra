@@ -24,8 +24,3 @@ export default function ArtikelComponent(props:ArtikelProps){
         </div>
     )
 }
-
-//<p>{artikel.unit}</p>
-//             <p className="text">
-//                 {artikel.name}
-//             </p>
