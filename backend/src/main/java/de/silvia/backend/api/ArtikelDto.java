@@ -14,5 +14,6 @@ public class ArtikelDto {
     @Id
     @NotNull
     private String name;
-    private int anzahl;
+    private float anzahl;
+    private String unit;
 }

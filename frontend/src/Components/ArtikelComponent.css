@@ -1,5 +1,35 @@
 .component{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    height: 42px;
+}
+
+.change{
+    width: 42px;
+    height: 38px;
+    padding: 4px;
+}
+.x{
+    width: 42px;
+    height: 38px;
+    padding: 4px;
+}
+.amount{
+    height: 23px;
+    width: 36px;
+    margin-top: 13px;
+    margin-bottom: 6px;
+    text-align: center;
+
+}
+
+dl{
+    align-self: flex-start;
+    margin-top: 0;
+    padding-right: 4px;
+    padding-left: 4px;
+}
+
+dd{
+    margin-left: 15px;
 }

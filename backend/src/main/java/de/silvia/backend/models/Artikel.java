@@ -12,12 +12,14 @@ public class Artikel {
     @Id
     @NonNull
     private String name;
-    private int anzahl;
+    private float anzahl;
+    private String unit;
 
     public Artikel(ArtikelDto artikelDto){
         super();
         this.name = artikelDto.getName();
         this.anzahl = artikelDto.getAnzahl();
+        this.unit = artikelDto.getUnit();
     }
 
     public Artikel decreaseArtikel(){

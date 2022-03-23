@@ -30,6 +30,4 @@ public class ArtikelList {
         artikels.add(article);
     }
 
-
-
 }

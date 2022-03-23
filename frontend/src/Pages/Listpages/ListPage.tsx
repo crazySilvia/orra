@@ -14,10 +14,10 @@ export default function ListPage() {
     const {listId} = useParams()
     const articleList = allList.find((List) => List.listId === listId)
     const navigate = useNavigate()
-    const [input, setInput] = useState<string>("")
-    const [zahl] = useState<number>(1)
+    const [inputName, setInputName] = useState<string>("")
+    const [inputUnit, setInputUnit] = useState<string>("")
+    const [inputAnzahl, setInputAnzahl] = useState<string>("1")
     const {token} = useContext(AuthContext)
-
 
     if (!articleList) {
         navigate('/')
@@ -60,14 +60,23 @@ export default function ListPage() {
     }
 
     const handleChangeName = (event: ChangeEvent<HTMLInputElement>) => {
-        setInput(event.target.value)
+        setInputName(event.target.value)
+    }
+
+    const handleChangeAnzahl = (event: ChangeEvent<HTMLInputElement>) => {
+        setInputAnzahl(event.target.value)
+    }
+
+    const handleChangeUnit = (event: ChangeEvent<HTMLInputElement>) => {
+        setInputUnit(event.target.value)
     }
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const articleDto: ArticleDto = {
-            name: input,
-            anzahl: zahl
+            name: inputName,
+            anzahl: parseFloat(inputAnzahl),
+            unit: inputUnit
         }
         saveNewArticle(articleList.listId, articleDto, token)
             .then(() => {
@@ -85,7 +94,9 @@ export default function ListPage() {
             <div className="content">
                 <form onSubmit={handleSubmit}>
                     <div className="addArticle_input">
-                        <input type="text" placeholder="Artikel" onChange={handleChangeName} value={input}/>
+                        <input type="text" placeholder="Artikel" onChange={handleChangeName} value={inputName}/>
+                        <input type="number" placeholder="1" onChange={handleChangeAnzahl} value={inputAnzahl}/>
+                        <input type="text" placeholder="Einheit" onChange={handleChangeUnit} value={inputUnit}/>
                     </div>
                     <div className="addArticle_button">
                         <button type={"submit"}>Artikel hinzufügen</button>
