@@ -72,6 +72,9 @@ export default function ListPage() {
     }
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        setInputName("")
+        setInputAnzahl("1")
+        setInputUnit("")
         event.preventDefault()
         const articleDto: ArticleDto = {
             name: inputName,

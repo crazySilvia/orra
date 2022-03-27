@@ -16,6 +16,8 @@ export default function AddListField() {
     }
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        //leert Eingabefeld:
+        setInput("")
         event.preventDefault()
         const newListDto: NewListDto = {
             listName: input
