@@ -1,8 +1,9 @@
-# Hier entsteht mein Capstone-Projekt
+Hier entsteht:
 
-## OrrA
+# OrrA
 Eine App um die Übersicht über seine Vorräte wiederzuerlangen. ;)
-######Link: https://orraapp.herokuapp.com/
+
+https://orra.digital
 ### Grundfunktion
 Die Vorräte können nach Kategorien (z.B.: Schränke) sortiert werden.
 ### Bisher geplante Addons
@@ -15,21 +16,4 @@ die Fehlenden auf einen Einkaufszettel.
 ### ToDos
 + Datenbank mit Rezepten finden
 + Dockerfile erstellen
-+ Plan machen
-+ schlichtes Design für den Anfang
-+ Tests schreiben
-+ Listen schreiben
-+ Artikel erstellen
-
-
-#### Erledigt:
-
-* Registrieren ermöglichen
-* Login ermöglichen
-* Farbschema aussuchen
-* Namen für App finden
-* Datenbank für Lebensmittel finden
-* Icon für Tab finden
-* Projekt aufsetzen
-* FE (React & Type Script) & BE (Spring, Maven, Java & MongoDB) einrichten
-* deployment über Heroku 
++ Code-Sprache vereinheitlichen

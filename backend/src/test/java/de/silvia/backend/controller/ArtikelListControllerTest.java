@@ -100,7 +100,7 @@ class ArtikelListControllerTest {
                         new SimpleGrantedAuthority("API_READWRITE")));
         String testListId = "testListId";
         List<Artikel> artikels = new java.util.ArrayList<>(Collections.emptyList());
-        ArtikelDto testArtikelDto = new ArtikelDto("ArtikelName", 5);
+        ArtikelDto testArtikelDto = new ArtikelDto("ArtikelName", 5, "Einheiten");
         Artikel testArtikel = new Artikel(testArtikelDto);
         artikels.add(testArtikel);
         ArtikelList testArtikelList = ArtikelList.newArtikelList(testListId, artikels, testUser.getUsername());
@@ -143,7 +143,7 @@ class ArtikelListControllerTest {
                         new SimpleGrantedAuthority("API_READWRITE")));
         String testListId = "testListId";
         List<Artikel> artikels = new java.util.ArrayList<>(Collections.emptyList());
-        ArtikelDto testArtikelDto = new ArtikelDto("ArtikelName", 5);
+        ArtikelDto testArtikelDto = new ArtikelDto("ArtikelName", 5, "Einheiten");
         Artikel testArtikel = new Artikel(testArtikelDto);
         artikels.add(testArtikel);
         ArtikelList testArtikelList = ArtikelList.newArtikelList(testListId, artikels, testUser.getUsername());
@@ -166,7 +166,7 @@ class ArtikelListControllerTest {
                         new SimpleGrantedAuthority("API_READWRITE")));
         String testListId = "testListId";
         List<Artikel> artikels = new java.util.ArrayList<>(Collections.emptyList());
-        ArtikelDto testArtikelDto = new ArtikelDto("ArtikelName", 5);
+        ArtikelDto testArtikelDto = new ArtikelDto("ArtikelName", 5, "Einheiten");
         Artikel testArtikel = new Artikel(testArtikelDto);
         artikels.add(testArtikel);
         ArtikelList testArtikelList = ArtikelList.newArtikelList(testListId, artikels, testUser.getUsername());

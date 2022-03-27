@@ -76,7 +76,7 @@ class ArtikelListServiceTest {
         List<Artikel> artikels = new java.util.ArrayList<>(Collections.emptyList());
         String userId = "userId";
         String listId = "listId";
-        ArtikelDto testArtikelDto = new ArtikelDto("artikelName", 7);
+        ArtikelDto testArtikelDto = new ArtikelDto("artikelName", 7, "Einheiten");
         Artikel testArtikel = new Artikel(testArtikelDto);
         ArtikelList testArtikelList = ArtikelList.newArtikelList(listId, artikels, userId);
         testArtikelList.addArticle(testArtikel);
