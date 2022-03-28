@@ -107,7 +107,7 @@ export default function ListPage() {
                 </form>
                 {articleList ?
                     articleList.artikels.map((Artikel, i) =>
-                        <ArtikelComponent artikel={Artikel} key={i}
+                        <ArtikelComponent article={Artikel} key={i}
                                           removeArtikel={artikelToRemove => delArtikel(artikelToRemove)}
                                           decreaseAnzahl={artikelToDecrease => decreaseArtikel(artikelToDecrease)}
                                           increaseAnzahl={artikelToIncrease => increaseArtikel(artikelToIncrease)}/>)

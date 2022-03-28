@@ -1,9 +1,9 @@
 package de.silvia.backend.services;
 
-import de.silvia.backend.api.ArtikelDto;
-import de.silvia.backend.models.Artikel;
-import de.silvia.backend.models.ArtikelList;
-import de.silvia.backend.repositories.IArtikelListRepo;
+import de.silvia.backend.api.ArticleDto;
+import de.silvia.backend.models.Article;
+import de.silvia.backend.models.ArticleList;
+import de.silvia.backend.repositories.IArticleListRepo;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -16,33 +16,33 @@ import static org.mockito.Mockito.*;
 
 class ArtikelListServiceTest {
 
-    private final IArtikelListRepo artikelListRepo = mock(IArtikelListRepo.class);
-    private final ArtikelListService artikelListService = new ArtikelListService(artikelListRepo);
+    private final IArticleListRepo artikelListRepo = mock(IArticleListRepo.class);
+    private final ArticleListService articleListService = new ArticleListService(artikelListRepo);
 
     @Test
     void addArtikelList() throws CloneNotSupportedException {
-        List<Artikel> artikels = Collections.emptyList();
+        List<Article> artikels = Collections.emptyList();
         String userId = "userId";
         String listName = "listName";
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(listName, artikels, userId);
+        ArticleList testArtikelList = ArticleList.newArticleList(listName, artikels, userId);
 
         when(artikelListRepo.insert(testArtikelList))
                 .thenReturn(testArtikelList);
 
-        assertEquals(testArtikelList, artikelListService.addArtikelList(userId, listName));
+        assertEquals(testArtikelList, articleListService.addArticleList(userId, listName));
     }
 
     @Test
     void shouldThrowErrorIfAddArtikelList() {
-        List<Artikel> artikels = Collections.emptyList();
+        List<Article> artikels = Collections.emptyList();
         String userId = "userId";
         String listName = "listName";
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(listName, artikels, userId);
+        ArticleList testArtikelList = ArticleList.newArticleList(listName, artikels, userId);
 
-        when(artikelListRepo.findArtikelListByUserIdAndListId(userId, listName))
+        when(artikelListRepo.findArticleListByUserIdAndListId(userId, listName))
                 .thenReturn(testArtikelList);
 
-        assertThrows(CloneNotSupportedException.class, () -> artikelListService.addArtikelList(userId, listName));
+        assertThrows(CloneNotSupportedException.class, () -> articleListService.addArticleList(userId, listName));
     }
 
     @Test
@@ -51,55 +51,55 @@ class ArtikelListServiceTest {
         String listId = "listId";
 
         //doThrow(new IllegalArgumentException()).when(artikelListRepo).deleteArtikelListByUserIdAndListId(userId, listId);
-        doNothing().when(artikelListRepo).deleteArtikelListByUserIdAndListId(userId, listId);
+        doNothing().when(artikelListRepo).deleteArticleListByUserIdAndListId(userId, listId);
 
-        artikelListService.deleteArtikelList(userId, listId);
-        verify(artikelListRepo, times(1)).deleteArtikelListByUserIdAndListId(userId, listId);
+        articleListService.deleteArticleList(userId, listId);
+        verify(artikelListRepo, times(1)).deleteArticleListByUserIdAndListId(userId, listId);
     }
 
     @Test
     void getAllArtikelLists() {
-        List<Artikel> artikels = Collections.emptyList();
+        List<Article> artikels = Collections.emptyList();
         String userId = "userId";
         String listId = "listId";
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(listId, artikels, userId);
-        List<ArtikelList> testArtikelListen = List.of(testArtikelList);
+        ArticleList testArtikelList = ArticleList.newArticleList(listId, artikels, userId);
+        List<ArticleList> testArtikelListen = List.of(testArtikelList);
 
         when(artikelListRepo.findAllByUserId(userId))
                 .thenReturn(testArtikelListen);
 
-        assertEquals(testArtikelListen, artikelListService.getAllArtikelLists(userId));
+        assertEquals(testArtikelListen, articleListService.getAllArticleLists(userId));
     }
 
     @Test
     void addArtikel() {
-        List<Artikel> artikels = new java.util.ArrayList<>(Collections.emptyList());
+        List<Article> artikels = new java.util.ArrayList<>(Collections.emptyList());
         String userId = "userId";
         String listId = "listId";
-        ArtikelDto testArtikelDto = new ArtikelDto("artikelName", 7, "Einheiten");
-        Artikel testArtikel = new Artikel(testArtikelDto);
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(listId, artikels, userId);
+        ArticleDto testArtikelDto = new ArticleDto("artikelName", 7, "Einheiten");
+        Article testArtikel = new Article(testArtikelDto);
+        ArticleList testArtikelList = ArticleList.newArticleList(listId, artikels, userId);
         testArtikelList.addArticle(testArtikel);
-        when(artikelListRepo.findArtikelListByUserIdAndListId(userId, listId))
+        when(artikelListRepo.findArticleListByUserIdAndListId(userId, listId))
                 .thenReturn(testArtikelList);
         when(artikelListRepo.save(testArtikelList))
                 .thenReturn(testArtikelList);
 
-        artikelListService.addArtikel(userId, listId, testArtikelDto);
+        articleListService.addArticle(userId, listId, testArtikelDto);
         verify(artikelListRepo, times(1)).save(testArtikelList);
     }
 
     @Test
     void getArtikelList() {
-        List<Artikel> artikels = Collections.emptyList();
+        List<Article> artikels = Collections.emptyList();
         String userId = "userId";
         String listId = "listId";
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(listId, artikels, userId);
+        ArticleList testArtikelList = ArticleList.newArticleList(listId, artikels, userId);
 
-        when(artikelListRepo.findArtikelListByUserIdAndListId(userId, listId))
+        when(artikelListRepo.findArticleListByUserIdAndListId(userId, listId))
                 .thenReturn(testArtikelList);
 
-        assertEquals(testArtikelList, artikelListService.getArtikelList(userId, listId));
+        assertEquals(testArtikelList, articleListService.getArticleList(userId, listId));
     }
 
     @Test
@@ -107,54 +107,54 @@ class ArtikelListServiceTest {
         String userId = "userId";
         String listId = "listId";
 
-        when(artikelListRepo.findArtikelListByUserIdAndListId(userId, listId))
+        when(artikelListRepo.findArticleListByUserIdAndListId(userId, listId))
                 .thenReturn(null);
 
-        assertThrows(NoSuchElementException.class, () -> artikelListService.getArtikelList(userId, listId));
+        assertThrows(NoSuchElementException.class, () -> articleListService.getArticleList(userId, listId));
     }
 
     @Test
     void deleteArtikel() {
-        List<Artikel> artikels = Collections.emptyList();
+        List<Article> artikels = Collections.emptyList();
         String userId = "userId";
         String listId = "listId";
         String artikelName = "artikelName";
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(listId, artikels, userId);
+        ArticleList testArtikelList = ArticleList.newArticleList(listId, artikels, userId);
 
-        when(artikelListRepo.findArtikelListByUserIdAndListId(userId, listId))
+        when(artikelListRepo.findArticleListByUserIdAndListId(userId, listId))
                 .thenReturn(testArtikelList);
 
-        artikelListService.deleteArtikel(userId, listId, artikelName);
+        articleListService.deleteArticle(userId, listId, artikelName);
         verify(artikelListRepo, times(1)).save(testArtikelList);
     }
 
     @Test
     void decreaseArtikel() {
-        List<Artikel> artikels = Collections.emptyList();
+        List<Article> artikels = Collections.emptyList();
         String userId = "userId";
         String listId = "listId";
         String artikelName = "artikelName";
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(listId, artikels, userId);
+        ArticleList testArtikelList = ArticleList.newArticleList(listId, artikels, userId);
 
-        when(artikelListRepo.findArtikelListByUserIdAndListId(userId, listId))
+        when(artikelListRepo.findArticleListByUserIdAndListId(userId, listId))
                 .thenReturn(testArtikelList);
 
-        artikelListService.decreaseArtikel(userId, listId, artikelName);
+        articleListService.decreaseArticle(userId, listId, artikelName);
         verify(artikelListRepo, times(1)).save(testArtikelList);
     }
 
     @Test
     void increaseArtikel() {
-        List<Artikel> artikels = Collections.emptyList();
+        List<Article> artikels = Collections.emptyList();
         String userId = "userId";
         String listId = "listId";
         String artikelName = "artikelName";
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(listId, artikels, userId);
+        ArticleList testArtikelList = ArticleList.newArticleList(listId, artikels, userId);
 
-        when(artikelListRepo.findArtikelListByUserIdAndListId(userId, listId))
+        when(artikelListRepo.findArticleListByUserIdAndListId(userId, listId))
                 .thenReturn(testArtikelList);
 
-        artikelListService.increaseArtikel(userId, listId, artikelName);
+        articleListService.increaseArticle(userId, listId, artikelName);
         verify(artikelListRepo, times(1)).save(testArtikelList);
     }
 }
