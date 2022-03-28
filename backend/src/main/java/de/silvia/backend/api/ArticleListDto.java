@@ -1,6 +1,6 @@
 package de.silvia.backend.api;
 
-import de.silvia.backend.models.Artikel;
+import de.silvia.backend.models.Article;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,9 +12,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArtikelListDto {
+public class ArticleListDto {
     @Id
     @NonNull
     private String listName;
-    private List<Artikel> artikelList;
+    private List<Article> listOfArticles;
 }

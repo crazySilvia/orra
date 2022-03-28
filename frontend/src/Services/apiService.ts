@@ -11,31 +11,31 @@ export const saveNewArticle = (listId: string, articleDto: ArticleDto, token?: s
 /**
  * Hier passiert das Erhöhen der Artikelanzahl
  * @param listId Name der jeweiligen Liste
- * @param artikelName Name des betreffenden Artikel
+ * @param articleName Name des betreffenden Artikel
  * @param token usertoken
  */
-export const decreaseArticle = (listId: string, artikelName: string, token?: string) =>
-    axios.patch(`/api/lists/${listId}/decrease/${artikelName}`, artikelName, token ? {headers: {"Authorization": "Bearer " + token}} : {})
+export const decreaseArticle = (listId: string, articleName: string, token?: string) =>
+    axios.patch(`/api/lists/${listId}/decrease/${articleName}`, articleName, token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
 
 /**
  * Hier passiert das Senken der Artikelanzahl
  * @param listId Name der jeweiligen Liste
- * @param artikelName Name des betreffenden Artikel
+ * @param articleName Name des betreffenden Artikel
  * @param token usertoken
  */
-export const increaseArticle = (listId: string, artikelName: string, token?: string) =>
-    axios.patch(`/api/lists/${listId}/increase/${artikelName}`, artikelName, token ? {headers: {"Authorization": "Bearer " + token}} : {})
+export const increaseArticle = (listId: string, articleName: string, token?: string) =>
+    axios.patch(`/api/lists/${listId}/increase/${articleName}`, articleName, token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
 
 /**
  * Hier passiert das Löschen der Artikel
  * @param listId Name der jeweiligen Liste
- * @param artikelName Name des zu löschenden Artikel
+ * @param articleName Name des zu löschenden Artikel
  * @param token usertoken
  */
-export const deleteArticle = (listId: string, artikelName: string, token?: string) =>
-    axios.delete(`/api/lists/${listId}/remove/${artikelName}`,token ? {headers: {"Authorization": "Bearer " + token}} : {})
+export const deleteArticle = (listId: string, articleName: string, token?: string) =>
+    axios.delete(`/api/lists/${listId}/remove/${articleName}`,token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
 
 /**

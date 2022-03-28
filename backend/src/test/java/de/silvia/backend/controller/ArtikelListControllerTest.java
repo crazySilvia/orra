@@ -1,14 +1,14 @@
 package de.silvia.backend.controller;
 
-import de.silvia.backend.api.ArtikelDto;
+import de.silvia.backend.api.ArticleDto;
 import de.silvia.backend.api.ListDto;
-import de.silvia.backend.models.Artikel;
-import de.silvia.backend.models.ArtikelList;
-import de.silvia.backend.repositories.IArtikelListRepo;
+import de.silvia.backend.models.Article;
+import de.silvia.backend.models.ArticleList;
+import de.silvia.backend.repositories.IArticleListRepo;
 import de.silvia.backend.security.models.User;
 import de.silvia.backend.security.repositories.IUserRepo;
 import de.silvia.backend.security.services.UserService;
-import de.silvia.backend.services.ArtikelListService;
+import de.silvia.backend.services.ArticleListService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -24,12 +24,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ArtikelListControllerTest {
 
-    private final IArtikelListRepo testArtikelListRepo = mock(IArtikelListRepo.class);
-    private final ArtikelListService mockedArtikelListService = mock(ArtikelListService.class);
+    private final IArticleListRepo testArtikelListRepo = mock(IArticleListRepo.class);
+    private final ArticleListService mockedArticleListService = mock(ArticleListService.class);
     private final IUserRepo testUserRepo = mock(IUserRepo.class);
     private final UserService testUserService = new UserService(testUserRepo);
-    private final ArtikelListController testArtikelListController =
-            new ArtikelListController(mockedArtikelListService, testUserService);
+    private final ArticleListController testArticleListController =
+            new ArticleListController(mockedArticleListService, testUserService);
 
     @Test
     void getAll() {
@@ -39,17 +39,17 @@ class ArtikelListControllerTest {
                 "suesue", "su123", List.of(
                         new SimpleGrantedAuthority("API_READWRITE")));
 
-        List<Artikel> artikels = Collections.emptyList();
+        List<Article> artikels = Collections.emptyList();
         String userId = "userId";
         String listId = "listId";
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(listId, artikels, userId);
-        List<ArtikelList> testArtikelListen = List.of(testArtikelList);
+        ArticleList testArtikelList = ArticleList.newArticleList(listId, artikels, userId);
+        List<ArticleList> testArtikelListen = List.of(testArtikelList);
         //When
         when(testUserRepo.findUserByUsername("Susi")).thenReturn(testUser);
-        when(mockedArtikelListService.getAllArtikelLists(testUser.getUsername()))
+        when(mockedArticleListService.getAllArticleLists(testUser.getUsername()))
                 .thenReturn(testArtikelListen);
         //Then
-        assertEquals(testArtikelListen, testArtikelListController.getAll(testPrincipal));
+        assertEquals(testArtikelListen, testArticleListController.getAll(testPrincipal));
     }
 
     @Test
@@ -62,16 +62,16 @@ class ArtikelListControllerTest {
 
         ListDto testListDto = new ListDto("testListName");
 
-        List<Artikel> artikels = Collections.emptyList();
+        List<Article> artikels = Collections.emptyList();
         String userId = "userId";
         String listId = "listId";
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(listId, artikels, userId);
+        ArticleList testArtikelList = ArticleList.newArticleList(listId, artikels, userId);
         //When
         when(testUserRepo.findUserByUsername("Susi")).thenReturn(testUser);
-        when(mockedArtikelListService.addArtikelList(testUser.getUsername(), testListDto.getListName()))
+        when(mockedArticleListService.addArticleList(testUser.getUsername(), testListDto.getListName()))
                 .thenReturn(testArtikelList);
         //Then
-        assertEquals(testArtikelList, testArtikelListController.addArtikelList(testPrincipal, testListDto));
+        assertEquals(testArtikelList, testArticleListController.addArticleList(testPrincipal, testListDto));
     }
 
     @Test
@@ -86,9 +86,9 @@ class ArtikelListControllerTest {
         //When
         when(testUserRepo.findUserByUsername("Susi")).thenReturn(testUser);
         //Then
-        testArtikelListController.deleteList(testPrincipal, testListId);
-        verify(mockedArtikelListService, times(1))
-                .deleteArtikelList(testUser.getUsername(), testListId);
+        testArticleListController.deleteList(testPrincipal, testListId);
+        verify(mockedArticleListService, times(1))
+                .deleteArticleList(testUser.getUsername(), testListId);
     }
 
     @Test
@@ -99,18 +99,18 @@ class ArtikelListControllerTest {
                 "suesue", "su123", List.of(
                         new SimpleGrantedAuthority("API_READWRITE")));
         String testListId = "testListId";
-        List<Artikel> artikels = new java.util.ArrayList<>(Collections.emptyList());
-        ArtikelDto testArtikelDto = new ArtikelDto("ArtikelName", 5, "Einheiten");
-        Artikel testArtikel = new Artikel(testArtikelDto);
+        List<Article> artikels = new java.util.ArrayList<>(Collections.emptyList());
+        ArticleDto testArtikelDto = new ArticleDto("ArtikelName", 5, "Einheiten");
+        Article testArtikel = new Article(testArtikelDto);
         artikels.add(testArtikel);
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(testListId, artikels, testUser.getUsername());
+        ArticleList testArtikelList = ArticleList.newArticleList(testListId, artikels, testUser.getUsername());
         //When
         when(testUserRepo.findUserByUsername("Susi")).thenReturn(testUser);
-        when(mockedArtikelListService.addArtikel(testUser.getUsername(), testListId, testArtikelDto))
+        when(mockedArticleListService.addArticle(testUser.getUsername(), testListId, testArtikelDto))
                 .thenReturn(testArtikelList);
         //Then
-        assertTrue(testArtikelListController.addArticle(testPrincipal, testArtikelDto, testListId)
-                .getArtikels().contains(testArtikel));
+        assertTrue(testArticleListController.addArticle(testPrincipal, testArtikelDto, testListId)
+                .getListOfArticles().contains(testArtikel));
     }
 
     @Test
@@ -122,16 +122,16 @@ class ArtikelListControllerTest {
                         new SimpleGrantedAuthority("API_READWRITE")));
         String testListId = "testListId";
         String testArticleName = "testArtikelName";
-        List<Artikel> artikels = Collections.emptyList();
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(testListId, artikels, testUser.getUsername());
+        List<Article> artikels = Collections.emptyList();
+        ArticleList testArtikelList = ArticleList.newArticleList(testListId, artikels, testUser.getUsername());
         //When
         when(testUserRepo.findUserByUsername("Susi")).thenReturn(testUser);
-        when(testArtikelListRepo.findArtikelListByUserIdAndListId(testUser.getUsername(), testListId))
+        when(testArtikelListRepo.findArticleListByUserIdAndListId(testUser.getUsername(), testListId))
                 .thenReturn(testArtikelList);
         //Then
-        testArtikelListController.delArticle(testPrincipal, testArticleName, testListId);
-        verify(mockedArtikelListService, times(1))
-                .deleteArtikel(testUser.getUsername(), testListId, testArticleName);
+        testArticleListController.delArticle(testPrincipal, testArticleName, testListId);
+        verify(mockedArticleListService, times(1))
+                .deleteArticle(testUser.getUsername(), testListId, testArticleName);
     }
 
     @Test
@@ -142,19 +142,19 @@ class ArtikelListControllerTest {
                 "suesue", "su123", List.of(
                         new SimpleGrantedAuthority("API_READWRITE")));
         String testListId = "testListId";
-        List<Artikel> artikels = new java.util.ArrayList<>(Collections.emptyList());
-        ArtikelDto testArtikelDto = new ArtikelDto("ArtikelName", 5, "Einheiten");
-        Artikel testArtikel = new Artikel(testArtikelDto);
+        List<Article> artikels = new java.util.ArrayList<>(Collections.emptyList());
+        ArticleDto testArtikelDto = new ArticleDto("ArtikelName", 5, "Einheiten");
+        Article testArtikel = new Article(testArtikelDto);
         artikels.add(testArtikel);
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(testListId, artikels, testUser.getUsername());
+        ArticleList testArtikelList = ArticleList.newArticleList(testListId, artikels, testUser.getUsername());
         //When
         when(testUserRepo.findUserByUsername("Susi")).thenReturn(testUser);
-        when(testArtikelListRepo.findArtikelListByUserIdAndListId(testUser.getUsername(), testListId))
+        when(testArtikelListRepo.findArticleListByUserIdAndListId(testUser.getUsername(), testListId))
                 .thenReturn(testArtikelList);
         //Then
-        testArtikelListController.decreaseArticle(testPrincipal,"ArtikelName", testListId);
-        verify(mockedArtikelListService, times(1))
-                .decreaseArtikel(testUser.getUsername(), testListId, testArtikel.getName());
+        testArticleListController.decreaseArticle(testPrincipal,"ArtikelName", testListId);
+        verify(mockedArticleListService, times(1))
+                .decreaseArticle(testUser.getUsername(), testListId, testArtikel.getName());
     }
 
     @Test
@@ -165,18 +165,18 @@ class ArtikelListControllerTest {
                 "suesue", "su123", List.of(
                         new SimpleGrantedAuthority("API_READWRITE")));
         String testListId = "testListId";
-        List<Artikel> artikels = new java.util.ArrayList<>(Collections.emptyList());
-        ArtikelDto testArtikelDto = new ArtikelDto("ArtikelName", 5, "Einheiten");
-        Artikel testArtikel = new Artikel(testArtikelDto);
+        List<Article> artikels = new java.util.ArrayList<>(Collections.emptyList());
+        ArticleDto testArtikelDto = new ArticleDto("ArtikelName", 5, "Einheiten");
+        Article testArtikel = new Article(testArtikelDto);
         artikels.add(testArtikel);
-        ArtikelList testArtikelList = ArtikelList.newArtikelList(testListId, artikels, testUser.getUsername());
+        ArticleList testArtikelList = ArticleList.newArticleList(testListId, artikels, testUser.getUsername());
         //When
         when(testUserRepo.findUserByUsername("Susi")).thenReturn(testUser);
-        when(testArtikelListRepo.findArtikelListByUserIdAndListId(testUser.getUsername(), testListId))
+        when(testArtikelListRepo.findArticleListByUserIdAndListId(testUser.getUsername(), testListId))
                 .thenReturn(testArtikelList);
         //Then
-        testArtikelListController.increaseArticle(testPrincipal,"ArtikelName", testListId);
-        verify(mockedArtikelListService, times(1))
-                .increaseArtikel(testUser.getUsername(), testListId, testArtikel.getName());
+        testArticleListController.increaseArticle(testPrincipal,"ArtikelName", testListId);
+        verify(mockedArticleListService, times(1))
+                .increaseArticle(testUser.getUsername(), testListId, testArtikel.getName());
     }
 }

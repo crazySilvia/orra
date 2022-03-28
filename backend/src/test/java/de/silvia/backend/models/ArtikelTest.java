@@ -11,15 +11,15 @@ class ArtikelTest {
 
     @Test
     void decreaseArtikel() {
-        Artikel testArtikel = Artikel.builder().anzahl(5).name("Testartikel").build();
-        testArtikel.decreaseArtikel();
-        assertEquals(4, testArtikel.getAnzahl());
+        Article testArtikel = Article.builder().amount(5).name("Testartikel").build();
+        testArtikel.decreaseArticle();
+        assertEquals(4, testArtikel.getAmount());
     }
 
     @Test
     void increaseArtikel() {
-        Artikel testArtikel = Artikel.builder().name("TestArtikel").anzahl(5).build();
-        testArtikel.increaseArtikel();
-        assertEquals(6, testArtikel.getAnzahl());
+        Article testArtikel = Article.builder().name("TestArtikel").amount(5).build();
+        testArtikel.increaseArticle();
+        assertEquals(6, testArtikel.getAmount());
     }
 }

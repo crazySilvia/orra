@@ -10,24 +10,24 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document
-public class ArtikelList {
+public class ArticleList {
     @Id
     private String listId;
     @NonNull
     private String listName;
-    private List<Artikel> artikels;
+    private List<Article> listOfArticles;
     private String userId;
 
-    public static ArtikelList newArtikelList(String listName, List<Artikel> artikels, String userId) {
-        return ArtikelList.builder()
+    public static ArticleList newArticleList(String listName, List<Article> listOfArticles, String userId) {
+        return ArticleList.builder()
                 .listName(listName)
-                .artikels(artikels)
+                .listOfArticles(listOfArticles)
                 .userId(userId)
                 .build();
     }
 
-    public void addArticle(Artikel article){
-        artikels.add(article);
+    public void addArticle(Article article){
+        listOfArticles.add(article);
     }
 
 }

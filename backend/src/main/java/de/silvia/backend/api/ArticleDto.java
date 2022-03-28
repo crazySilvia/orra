@@ -9,11 +9,11 @@ import org.springframework.data.annotation.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArtikelDto {
+public class ArticleDto {
 
     @Id
     @NotNull
     private String name;
-    private float anzahl;
+    private float amount;
     private String unit;
 }
