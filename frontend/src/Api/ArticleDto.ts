@@ -1,5 +1,5 @@
 export interface ArticleDto {
     name: string
-    anzahl: number
+    amount: number
     unit: string
 }

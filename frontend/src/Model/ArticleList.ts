@@ -1,7 +1,7 @@
 import {IArticle} from "./Article";
 
-export interface IArtikelList{
+export interface IArticleList {
     listId: string
     listName: string
-    artikels: IArticle[]
+    listOfArticles: IArticle[]
 }

@@ -2,7 +2,7 @@ import './ListPage.css';
 import React, {ChangeEvent, FormEvent, useContext, useState} from "react";
 import Header from "../../Components/Header";
 import {useNavigate, useParams} from "react-router-dom";
-import ArtikelComponent from "../../Components/ArtikelComponent";
+import ArticleComponent from "../../Components/ArticleComponent";
 import Sidebar from "../../Components/Sidebar";
 import {DataContext} from "../../Context/DataProvider";
 import {decreaseArticle, deleteArticle, deleteList, increaseArticle, saveNewArticle} from "../../Services/apiService";
@@ -16,7 +16,7 @@ export default function ListPage() {
     const navigate = useNavigate()
     const [inputName, setInputName] = useState<string>("")
     const [inputUnit, setInputUnit] = useState<string>("")
-    const [inputAnzahl, setInputAnzahl] = useState<string>("1")
+    const [inputAmount, setInputAmount] = useState<string>("1")
     const {token} = useContext(AuthContext)
 
     if (!articleList) {
@@ -24,7 +24,7 @@ export default function ListPage() {
         return (
             <div>Liste existiert nicht</div>)
     }
-    const entfernen = () => {
+    const delList = () => {
         deleteList(articleList.listId, token)
             .then(() => {
                 refresh()
@@ -35,24 +35,24 @@ export default function ListPage() {
             .catch((er: any) => console.error(er))
     }
 
-    const delArtikel = (artikelToRemove: string) => {
-        deleteArticle(articleList.listId, artikelToRemove, token)
+    const delArticle = (articleToRemove: string) => {
+        deleteArticle(articleList.listId, articleToRemove, token)
             .then(() => {
                 refresh()
             })
             .catch((er: any) => console.error(er))
     }
 
-    const increaseArtikel = (artikelToIncrease: string) => {
-        increaseArticle(articleList.listId, artikelToIncrease, token)
+    const incrArticle = (articleToIncrease: string) => {
+        increaseArticle(articleList.listId, articleToIncrease, token)
             .then(() => {
                 refresh()
             })
             .catch((er: any) => console.error(er))
     }
 
-    const decreaseArtikel = (artikelToDecrease: string) => {
-        decreaseArticle(articleList.listId, artikelToDecrease, token)
+    const decrArticle = (articleToDecrease: string) => {
+        decreaseArticle(articleList.listId, articleToDecrease, token)
             .then(() => {
                 refresh()
             })
@@ -64,7 +64,7 @@ export default function ListPage() {
     }
 
     const handleChangeAnzahl = (event: ChangeEvent<HTMLInputElement>) => {
-        setInputAnzahl(event.target.value)
+        setInputAmount(event.target.value)
     }
 
     const handleChangeUnit = (event: ChangeEvent<HTMLInputElement>) => {
@@ -73,12 +73,12 @@ export default function ListPage() {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         setInputName("")
-        setInputAnzahl("1")
+        setInputAmount("1")
         setInputUnit("")
         event.preventDefault()
         const articleDto: ArticleDto = {
             name: inputName,
-            anzahl: parseFloat(inputAnzahl),
+            amount: parseFloat(inputAmount),
             unit: inputUnit
         }
         saveNewArticle(articleList.listId, articleDto, token)
@@ -98,7 +98,7 @@ export default function ListPage() {
                 <form onSubmit={handleSubmit}>
                     <div className="addArticle_input">
                         <input type="text" placeholder="Artikel" onChange={handleChangeName} value={inputName}/>
-                        <input type="number" placeholder="1" onChange={handleChangeAnzahl} value={inputAnzahl}/>
+                        <input type="number" placeholder="1" onChange={handleChangeAnzahl} value={inputAmount}/>
                         <input type="text" placeholder="Einheit" onChange={handleChangeUnit} value={inputUnit}/>
                     </div>
                     <div className="addArticle_button">
@@ -106,13 +106,13 @@ export default function ListPage() {
                     </div>
                 </form>
                 {articleList ?
-                    articleList.artikels.map((Artikel, i) =>
-                        <ArtikelComponent article={Artikel} key={i}
-                                          removeArtikel={artikelToRemove => delArtikel(artikelToRemove)}
-                                          decreaseAnzahl={artikelToDecrease => decreaseArtikel(artikelToDecrease)}
-                                          increaseAnzahl={artikelToIncrease => increaseArtikel(artikelToIncrease)}/>)
+                    articleList.listOfArticles.map((Article, i) =>
+                        <ArticleComponent article={Article} key={i}
+                                          removeArticle={articleToRemove => delArticle(articleToRemove)}
+                                          decreaseAmount={articleToDecrease => decrArticle(articleToDecrease)}
+                                          increaseAmount={articleToIncrease => incrArticle(articleToIncrease)}/>)
                     : "Liste existiert nicht"}
-                <button onClick={entfernen}>Liste löschen</button>
+                <button onClick={delList}>Liste löschen</button>
             </div>
         </div>
     )
