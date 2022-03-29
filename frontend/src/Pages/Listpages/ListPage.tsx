@@ -97,7 +97,7 @@ export default function ListPage() {
             <div className="content">
                 <form onSubmit={handleSubmit}>
                     <div className="addArticle_input">
-                        <input type="text" placeholder="Artikel" onChange={handleChangeName} value={inputName}/>
+                        <input type="text" placeholder="Artikel" onChange={handleChangeName} value={inputName} required/>
                         <input type="number" placeholder="1" onChange={handleChangeAnzahl} value={inputAmount}/>
                         <input type="text" placeholder="Einheit" onChange={handleChangeUnit} value={inputUnit}/>
                     </div>

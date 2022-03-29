@@ -33,8 +33,8 @@ export default function LoginPage() {
         <div className="loginpage">
             <Header title="Anmelden"/>
             <form onSubmit={onSubmit}>
-                <input type="text" placeholder="Nutzername" onChange={onUserNameChange} value={name}/>
-                <input type="password" placeholder="Passwort" onChange={onPasswordChange} value={password}/>
+                <input type="text" placeholder="Nutzername" onChange={onUserNameChange} value={name} required/>
+                <input type="password" placeholder="Passwort" onChange={onPasswordChange} value={password} required/>
                 <button type="submit">Login</button>
             </form>
         </div>
