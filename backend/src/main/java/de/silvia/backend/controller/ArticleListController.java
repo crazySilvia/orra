@@ -64,21 +64,21 @@ public class ArticleListController {
         return aServ.addArticle(user.getUsername(), listId, articleDto);
     }
 
-    @DeleteMapping(value = "/{listId}/remove/{articleName}")
-    public void delArticle(Principal principal, @PathVariable String articleName, @PathVariable String listId){
+    @DeleteMapping(value = "/{listId}/remove/{articleId}")
+    public void delArticle(Principal principal, @PathVariable String articleId, @PathVariable String listId){
         User user = getUser(principal);
-        aServ.deleteArticle(user.getUsername(), listId, articleName);
+        aServ.deleteArticle(user.getUsername(), listId, articleId);
     }
 
-    @PatchMapping("/{listId}/decrease/{articleName}")
-    public void decreaseArticle(Principal principal, @PathVariable String articleName, @PathVariable String listId){
+    @PatchMapping("/{listId}/decrease/{articleId}")
+    public void decreaseArticle(Principal principal, @PathVariable String articleId, @PathVariable String listId){
         User user = getUser(principal);
-        aServ.decreaseArticle(user.getUsername(), listId, articleName);
+        aServ.decreaseArticle(user.getUsername(), listId, articleId);
     }
 
-    @PatchMapping("/{listId}/increase/{articleName}")
-    public void increaseArticle(Principal principal, @PathVariable String articleName, @PathVariable String listId){
+    @PatchMapping("/{listId}/increase/{articleId}")
+    public void increaseArticle(Principal principal, @PathVariable String articleId, @PathVariable String listId){
         User user = getUser(principal);
-        aServ.increaseArticle(user.getUsername(), listId, articleName);
+        aServ.increaseArticle(user.getUsername(), listId, articleId);
     }
 }

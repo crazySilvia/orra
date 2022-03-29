@@ -39,7 +39,7 @@ class ArtikelListServiceTest {
         String listName = "listName";
         ArticleList testArtikelList = ArticleList.newArticleList(listName, artikels, userId);
 
-        when(artikelListRepo.findArticleListByUserIdAndListId(userId, listName))
+        when(artikelListRepo.findArticleListByUserIdAndListName(userId, listName))
                 .thenReturn(testArtikelList);
 
         assertThrows(CloneNotSupportedException.class, () -> articleListService.addArticleList(userId, listName));

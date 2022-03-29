@@ -15,5 +15,6 @@ public interface IArticleListRepo extends MongoRepository<ArticleList, String> {
 
     ArticleList findArticleListByUserIdAndListId(String userId, String listId);
 
+    ArticleList findArticleListByUserIdAndListName(String userId, String listName);
 
 }
