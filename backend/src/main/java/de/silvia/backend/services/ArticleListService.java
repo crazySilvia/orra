@@ -16,18 +16,17 @@ import java.util.NoSuchElementException;
 public class ArticleListService {
 
     private final IArticleListRepo articleListRepo;
-    private static final Log LOG = LogFactory.getLog(ArticleListService.class);
+    //private static final Log LOG = LogFactory.getLog(ArticleListService.class);
 
     public ArticleListService(IArticleListRepo articleListRepo) {
         this.articleListRepo = articleListRepo;
     }
 
     public ArticleList addArticleList(String userId, String listName) throws CloneNotSupportedException {
-        if (articleListRepo.findArticleListByUserIdAndListId(userId, listName) != null) {
+        if (articleListRepo.findArticleListByUserIdAndListName(userId, listName) != null) {
             throw new CloneNotSupportedException("Liste mit Namen " + listName + " gibt es schon!");
         }
         List<Article> listOfArticles = Collections.emptyList();
-        LOG.info("Liste mit Namen " + listName + " hinzugefügt!");
         return articleListRepo.insert(ArticleList.newArticleList(listName, listOfArticles, userId));
     }
 
@@ -54,31 +53,31 @@ public class ArticleListService {
         return articleList;
     }
 
-    public void deleteArticle(String userId, String listId, String articleName) {
+    public void deleteArticle(String userId, String listId, String articleId) {
         ArticleList articleList = getArticleList(userId, listId);
         List<Article> updateArticle = articleList.getListOfArticles()
                 .stream()
-                .filter((article) -> (!article.getName().equals(articleName)))
+                .filter((article) -> (!article.getArticleId().equals(articleId)))
                 .toList();
         articleList.setListOfArticles(updateArticle);
         articleListRepo.save(articleList);
     }
 
-    public void decreaseArticle(String userId, String listId, String articleName) {
+    public void decreaseArticle(String userId, String listId, String articleId) {
         ArticleList articleList = getArticleList(userId, listId);
         List<Article> artList = articleList.getListOfArticles()
                 .stream()
-                .map((article) -> (article.getName().equals(articleName)) ? article.decreaseArticle() : article)
+                .map((article) -> (article.getArticleId().equals(articleId)) ? article.decreaseArticle() : article)
                 .toList();
         articleList.setListOfArticles(artList);
         articleListRepo.save(articleList);
     }
 
-    public void increaseArticle(String userId, String listId, String articleName) {
+    public void increaseArticle(String userId, String listId, String articleId) {
         ArticleList articleList = getArticleList(userId, listId);
         List<Article> artList = articleList.getListOfArticles()
                 .stream()
-                .map((article) -> (article.getName().equals(articleName)) ? article.increaseArticle() : article)
+                .map((article) -> (article.getArticleId().equals(articleId)) ? article.increaseArticle() : article)
                 .toList();
         articleList.setListOfArticles(artList);
         articleListRepo.save(articleList);
