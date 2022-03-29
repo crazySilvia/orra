@@ -48,11 +48,11 @@ export default function RegisterPage() {
         <div className="registerpage">
             <Header title="Account anlegen"/>
             <form onSubmit={onSubmit}>
-                <input type="text" placeholder="Vorname" onChange={onFirstNameChange} value={firstName}/>
-                <input type="text" placeholder="Nachname" onChange={onLastNameChange} value={lastName}/>
+                <input type="text" placeholder="Vorname" onChange={onFirstNameChange} value={firstName} required/>
+                <input type="text" placeholder="Nachname" onChange={onLastNameChange} value={lastName} required/>
                 <input type="email" placeholder="E-Mail" onChange={onEmailChange} value={email}/>
-                <input type="text" placeholder="Nickname" onChange={onUserNameChange} value={userName}/>
-                <input type="password" placeholder="Passwort" onChange={onPasswordChange} value={password}/>
+                <input type="text" placeholder="Nickname" onChange={onUserNameChange} value={userName} required/>
+                <input type="password" placeholder="Passwort" onChange={onPasswordChange} value={password} required/>
                 <button type="submit">Registrieren</button>
             </form>
         </div>

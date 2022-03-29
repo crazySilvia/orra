@@ -36,7 +36,7 @@ export default function AddListField() {
     return (
         <form onSubmit={handleSubmit}>
             <div className="addList_input">
-                <input type="text" placeholder="Listenname" onChange={handleChange} value={input}/>
+                <input type="text" placeholder="Listenname" onChange={handleChange} value={input} required/>
             </div>
             <div className="addList_button">
                 <button type={"submit"}>Liste hinzufügen</button>
