@@ -2,8 +2,14 @@ import axios, {AxiosResponse} from "axios";
 import {NewUserDto} from "../Api/NewUserDto";
 import {NewListDto} from "../Api/NewListDto";
 import {ArticleDto} from "../Api/ArticleDto";
+import {NewCategoryDto} from "../Api/NewCategoryDto";
 
-
+/**
+ * Hier wird ein neuer Artikel gespeichert
+ * @param listId Liste, auf die der Artikel kommt
+ * @param articleDto Artikel, der gespeichert wird
+ * @param token usertoken
+ */
 export const saveNewArticle = (listId: string, articleDto: ArticleDto, token?: string) =>
     axios.post(`/api/lists/${listId}`, articleDto, token ? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
@@ -64,6 +70,34 @@ export const saveNewList = (newListDto: NewListDto, token?: string) => {
  */
 export const listnames = (token?: string) =>
     axios.get("/api/lists", token ? {headers: {"Authorization": "Bearer " + token}} : {})
+        .then(response => response.data)
+
+/**
+ * Hier passiert das Löschen der Kategorie
+ * @param categoryId ID der jeweiligen Kategorie
+ * @param token usertoken
+ */
+export const deleteCategory = (categoryId: string, token?: string) =>
+    axios.delete(`/api/category/${categoryId}`, token ? {headers: {"Authorization": "Bearer " + token}} : {})
+        .then(response => response.data)
+
+/**
+ * Hier passiert das Speichern einer neuen Kategorie
+ * @param newCategoryDto jeweiligen Liste
+ * @param token usertoken
+ */
+export const saveNewCategory = (newCategoryDto: NewCategoryDto, token?: string) => {
+    console.log(newCategoryDto.categoryName)
+    return axios.post("/api/category", newCategoryDto, token ? {headers: {"Authorization": "Bearer " + token}} : {})
+        .then(response => response.data)
+}
+
+/**
+ * Hier werden die Kategorien der User abgerufen
+ * @param token usertoken
+ */
+export const category = (token?: string) =>
+    axios.get("/api/category", token? {headers: {"Authorization": "Bearer " + token}} : {})
         .then(response => response.data)
 
 /**

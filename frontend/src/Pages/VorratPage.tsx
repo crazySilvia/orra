@@ -3,16 +3,18 @@ import Header from "../Components/Header";
 import ListMenu from "../Components/ListMenu";
 import AddListField from "../Components/AddListField";
 import {DataContext} from "../Context/DataProvider";
+import AddCategoryField from "../Components/AddCategoryField";
+import CategoryMenu from "../Components/CategoryMenu";
 
-export default function ListsPage() {
+export default function VorratPage() {
     
-    const {allList} = useContext(DataContext)
+    const {allCategory} = useContext(DataContext)
 
     return (
         <div className="page">
             <Header title={"Vorrat"}/>
-            <AddListField/>
-            <ListMenu lists={allList}/>
+            <AddCategoryField/>
+            <CategoryMenu list={allCategory}/>
         </div>
     )
 }

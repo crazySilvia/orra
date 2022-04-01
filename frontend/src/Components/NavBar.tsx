@@ -17,6 +17,9 @@ export default function NavBar() {
             <Link to={"/register"}>
                 Registrieren
             </Link>
+            <Link to={"/category"}>
+                Kategorie
+            </Link>
         </div>
     )
 }
